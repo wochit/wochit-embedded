@@ -1,0 +1,50 @@
+{
+  "name": "@wochit/embedded",
+  "version": "0.0.0",
+  "private": false,
+  "description": "description",
+  "files": [
+    "dist"
+  ],
+  "main": "./dist/wochit-embedded.umd.js",
+  "module": "./dist/wochit-embedded.es.js",
+  "exports": {
+    ".": {
+      "import": "./dist/wochit-embedded.es.js",
+      "require": "./dist/wochit-embedded.umd.js"
+    }
+  },
+  "scripts": {
+    "dev": "tsc && vite build --watch",
+    "dev:module": "tsc && vite build --config vite-module.config.js --watch",
+    "dev:snippet": "tsc && vite build --config vite-snippet.config.js --watch",
+    "test": "echo \"test\" && exit 0",
+    "build:module": "tsc && vite build --config vite-module.config.js",
+    "build:snippet": "tsc && vite build --config vite-snippet.config.js",
+    "build:all": "npm run build:module && npm run build:snippet"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wochit/wochit-embedded.git"
+  },
+  "keywords": [
+    "wochit",
+    "wochit-inside",
+    "site-integration"
+  ],
+  "author": "Wochit LTD",
+  "license": "GPL-2.0",
+  "bugs": {
+    "url": "https://github.com/wochit/wochit-embedded/issues"
+  },
+  "homepage": "https://github.com/wochit/wochit-embedded#readme",
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^5.16.0",
+    "@typescript-eslint/parser": "^5.16.0",
+    "eslint": "^8.11.0",
+    "eslint-config-prettier": "^8.5.0",
+    "prettier": "^2.6.0",
+    "typescript": "^4.6.2",
+    "vite": "^2.8.6"
+  }
+}
