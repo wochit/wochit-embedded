@@ -15,13 +15,13 @@
     }
   },
   "scripts": {
-    "dev": "tsc && vite build --watch",
     "dev:module": "tsc && vite build --config vite-module.config.js --watch",
     "dev:snippet": "tsc && vite build --config vite-snippet.config.js --watch",
     "test": "echo \"test\" && exit 0",
     "build:module": "tsc && vite build --config vite-module.config.js",
     "build:snippet": "tsc && vite build --config vite-snippet.config.js",
-    "build:all": "npm run build:module && npm run build:snippet"
+    "build:snippet:min": "tsc && vite build --config vite-snippet-min.config.js",
+    "build:all": "npm run build:module && npm run build:snippet && npm run build:snippet:min"
   },
   "repository": {
     "type": "git",
@@ -30,7 +30,8 @@
   "keywords": [
     "wochit",
     "wochit-inside",
-    "site-integration"
+    "site-integration",
+    "embedded-video-editor"
   ],
   "author": "Wochit LTD",
   "license": "GPL-2.0",
