@@ -1,4 +1,4 @@
-import wt from './module';
+import wtModule from './module';
 
 declare global {
   interface Window {
@@ -6,11 +6,13 @@ declare global {
   }
 }
 
-function wochitSnippet() {
-  wt.config({ channelId: '1' });
-  wt.openShortcut({});
-
-  console.log('wochit-snippet', __APP_VERSION__, window.wt);
-}
-
-wochitSnippet();
+export default (function wochitSnippet() {
+  console.log(
+    'wochit-snippet',
+    __APP_VERSION__,
+    window.wt,
+    wtModule.config(),
+    wtModule.openShortcut()
+  );
+  return void 0;
+})();
