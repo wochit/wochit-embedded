@@ -13,7 +13,7 @@ var __wt = function() {
     openShortcut
   };
   var snippet = function wochitSnippet() {
-    console.log("wochit-snippet", window.wt, wtModule.config(), wtModule.openShortcut());
+    console.log("wochit-snippet", "0.0.0", window.wt, wtModule.config(), wtModule.openShortcut());
     return void 0;
   }();
   return snippet;

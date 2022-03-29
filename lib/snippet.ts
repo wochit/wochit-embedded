@@ -9,6 +9,7 @@ declare global {
 export default (function wochitSnippet() {
   console.log(
     'wochit-snippet',
+    __APP_VERSION__,
     window.wt,
     wtModule.config(),
     wtModule.openShortcut()
