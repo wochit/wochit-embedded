@@ -7,11 +7,14 @@ export default defineConfig({
     __APP_VERSION__: JSON.stringify(pkg.version),
   },
   build: {
-    emptyOutDir: false,
+    emptyOutDir: true,
     lib: {
       entry: path.resolve(__dirname, 'lib/module.ts'),
       name: 'wochit',
-      fileName: (format) => `wochit-embedded.${format}.js`,
+      fileName: (format) => `module.${format}.js`,
+    },
+    rollupOptions: {
+      output: [{ exports: 'named' }],
     },
   },
 });

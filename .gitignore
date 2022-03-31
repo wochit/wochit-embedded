@@ -30,3 +30,7 @@ typings/
 # IDE
 .idea/
 .vscode
+
+dist/snippet.d.ts
+dist/snippet.d.ts.map
+/lib/**/*.js

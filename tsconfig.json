@@ -1,21 +1,18 @@
 {
   "compilerOptions": {
-    "target": "ESNext",
+    "target": "ES2021",
     "useDefineForClassFields": true,
     "module": "ESNext",
     "lib": ["ESNext", "DOM"],
     "moduleResolution": "Node",
     "strict": true,
-    "sourceMap": true,
+    "sourceMap": false,
     "resolveJsonModule": true,
-    "esModuleInterop": true,
-    "noEmit": true,
+    "esModuleInterop": false,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noImplicitReturns": true,
-    "strictNullChecks": true,
   },
-  "include": [
-    "lib"
-  ]
+  "include": ["lib"],
+  "exclude": ["node_modules", "dist", "dist-snippet"]
 }

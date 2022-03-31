@@ -8,10 +8,12 @@ export default defineConfig({
   },
   build: {
     emptyOutDir: false,
+    outDir: 'dist-snippet',
     minify: true,
+    sourcemap: true,
     lib: {
       entry: path.resolve(__dirname, 'lib/snippet.ts'),
-      name: '__wt',
+      name: '__unused__',
       formats: ['iife'],
       fileName: (format) => `wochit-snippet.${format}.min.js`,
     },
