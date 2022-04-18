@@ -1,10 +1,10 @@
 import { CommonOptions } from './model/CommonOptions';
-import { ShortcutOptions } from './model/ShortcutOptions';
+import { ApplicationOptions } from './model/ApplicationOptions';
 import { WochitEmbeddedApp } from './model/WochitEmbeddedApp';
 import { hasObject, hasString, logError } from './api/toolkit';
 
 let common: CommonOptions;
-let shortcut: ShortcutOptions;
+let shortcut: ApplicationOptions;
 const app = new WochitEmbeddedApp();
 
 export function config(options: ICommonOptions) {
@@ -14,6 +14,9 @@ export function config(options: ICommonOptions) {
   } else if (!hasString(options.channelId)) {
     logError('calling config() without channelId');
     return;
+  } else if (!hasString(options.userToken) && options.skipLogin !== true) {
+    logError('calling config() without userToken');
+    return;
   }
 
   common = new CommonOptions(options);
@@ -21,21 +24,31 @@ export function config(options: ICommonOptions) {
   app.log('config', common);
 }
 
-export function openShortcut(options?: IShortcutOptions) {
+export function openVideoEditor(options?: IApplicationOptions) {
   if (!common) {
-    logError('calling openShortcut() before config()');
+    logError('calling openVideoEditor() before config()');
     return;
   }
 
-  shortcut = new ShortcutOptions(
-    hasObject(options) ? (options as IShortcutOptions) : {}
+  shortcut = new ApplicationOptions(
+    hasObject(options) ? (options as IApplicationOptions) : {}
   );
-  app.log('openShortcut', shortcut);
+
+  try {
+    new URL(shortcut.envUrl);
+  } catch (xcp) {
+    logError(
+      `calling openVideoEditor() with invalid envUrl: "${options?.envUrl}"`
+    );
+    return;
+  }
+
+  app.log('openVideoEditor', shortcut);
   app.setContext(common, shortcut);
-  app.openShortcut();
+  app.openVideoEditor();
 }
 
 export default {
   config,
-  openShortcut,
+  openVideoEditor,
 };

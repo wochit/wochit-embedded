@@ -14,5 +14,9 @@
     "noImplicitReturns": true,
   },
   "include": ["lib"],
-  "exclude": ["node_modules", "dist", "dist-snippet"]
+  "exclude": ["node_modules", "dist", "dist-snippet"],
+  "typeRoots": [
+    "./lib",
+    "./node_modules/@types/"
+  ]
 }

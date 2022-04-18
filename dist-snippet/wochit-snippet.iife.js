@@ -18,21 +18,15 @@ var __spreadValues = (a, b) => {
   "use strict";
   const LOGGER_PREFIX = "@wochit/embedded:";
   const CONTAINER_CLASS = "wochit-embedded-container";
-  const IFRAME_ID = "wtInsideIframe";
   const IFRAME_CLASS = "wochit-embedded-iframe";
+  const BODY_WHEN_MOUNTED_CLASS = "wochit-embedded-mounted";
+  const SPINNER_CLASS = "wochit-embedded-spinner";
   const WOCHIT_DOMAIN_MASK = ".wochit.com";
-  const ENV_URL_SHORTCUT = {
-    test: "https://shortcut-test.wochit.com/",
-    "test-local": "https://localhost.wochit.com:8080/",
-    "test-docker": "https://fb-self-serve-shortcut.wochit.com/",
-    stage: "https://shortcut-stage.wochit.com/",
-    prod: "https://shortcut.wochit.com/",
-    "prod-local": "https://localhost.wochit.com:8080/"
-  };
   var INCOMING_MESSAGE;
   (function(INCOMING_MESSAGE2) {
-    INCOMING_MESSAGE2["SHORTCUT_READY"] = "shortcutLoaded";
-    INCOMING_MESSAGE2["STUDIO_READY"] = "studioLoaded";
+    INCOMING_MESSAGE2["SHORTCUT_LOADED"] = "shortcutLoaded";
+    INCOMING_MESSAGE2["SHORTCUT_READY"] = "shortcutReady";
+    INCOMING_MESSAGE2["STUDIO_LOADED"] = "studioLoaded";
     INCOMING_MESSAGE2["APPLICATION_EVENT"] = "APPLICATION_EVENT";
   })(INCOMING_MESSAGE || (INCOMING_MESSAGE = {}));
   var OUTGOING_MESSAGE;
@@ -40,6 +34,12 @@ var __spreadValues = (a, b) => {
     OUTGOING_MESSAGE2["SHORTCUT_OPTIONS"] = "shortcutOptions";
     OUTGOING_MESSAGE2["STUDIO_OPTIONS"] = "studioOptions";
   })(OUTGOING_MESSAGE || (OUTGOING_MESSAGE = {}));
+  const DEFAULT = {
+    SKIP_LOGIN: false,
+    VERBOSE: false,
+    ENV_URL: "https://shortcut.wochit.com",
+    CALLBACK_LOADED: noop
+  };
   function noop() {
   }
   function hasHTMLElement(value) {
@@ -50,12 +50,6 @@ var __spreadValues = (a, b) => {
   }
   function hasString(value) {
     return typeof value === "string" && value.length > 0;
-  }
-  function hasNumber(value) {
-    return typeof value === "number" && Number.isFinite(value);
-  }
-  function hasArray(value) {
-    return value instanceof Array && value.length > 0;
   }
   function hasObject(value) {
     return typeof value === "object" && value !== null;
@@ -69,31 +63,58 @@ var __spreadValues = (a, b) => {
   function normalizeSpace(str) {
     return str.trim().replace(/\s+/gm, " ");
   }
-  var __classPrivateFieldGet$1 = globalThis && globalThis.__classPrivateFieldGet || function(receiver, state, kind, f) {
-    if (kind === "a" && !f)
-      throw new TypeError("Private accessor was defined without a getter");
-    if (typeof state === "function" ? receiver !== state || !f : !state.has(receiver))
-      throw new TypeError("Cannot read private member from an object whose class did not declare it");
-    return kind === "m" ? f : kind === "a" ? f.call(receiver) : f ? f.value : state.get(receiver);
-  };
-  var _CommonOptions_environments;
   class CommonOptions {
     constructor(options) {
-      _CommonOptions_environments.set(this, [
-        "test",
-        "prod",
-        "stage",
-        "test-local",
-        "prod-local",
-        "test-docker"
-      ]);
       Object.defineProperty(this, "channelId", {
         enumerable: true,
         configurable: true,
         writable: true,
         value: ""
       });
-      Object.defineProperty(this, "organizationId", {
+      Object.defineProperty(this, "userToken", {
+        enumerable: true,
+        configurable: true,
+        writable: true,
+        value: null
+      });
+      Object.defineProperty(this, "skipLogin", {
+        enumerable: true,
+        configurable: true,
+        writable: true,
+        value: DEFAULT.SKIP_LOGIN
+      });
+      Object.defineProperty(this, "verbose", {
+        enumerable: true,
+        configurable: true,
+        writable: true,
+        value: DEFAULT.VERBOSE
+      });
+      for (const prop in options) {
+        if (Object.prototype.hasOwnProperty.call(options, prop)) {
+          this[prop] = options[prop];
+        }
+      }
+      if (!hasBoolean(this.skipLogin)) {
+        this.skipLogin = DEFAULT.SKIP_LOGIN;
+      }
+      if (!hasBoolean(this.verbose)) {
+        this.verbose = false;
+      }
+      if (!hasString(this.envUrl)) {
+        this.envUrl = DEFAULT.ENV_URL;
+      }
+    }
+  }
+  class ApplicationOptions {
+    constructor(options) {
+      var _a;
+      Object.defineProperty(this, "envUrl", {
+        enumerable: true,
+        configurable: true,
+        writable: true,
+        value: DEFAULT.ENV_URL
+      });
+      Object.defineProperty(this, "containerEl", {
         enumerable: true,
         configurable: true,
         writable: true,
@@ -103,96 +124,7 @@ var __spreadValues = (a, b) => {
         enumerable: true,
         configurable: true,
         writable: true,
-        value: true
-      });
-      Object.defineProperty(this, "idpServiceName", {
-        enumerable: true,
-        configurable: true,
-        writable: true,
-        value: null
-      });
-      Object.defineProperty(this, "ssoUrl", {
-        enumerable: true,
-        configurable: true,
-        writable: true,
-        value: null
-      });
-      Object.defineProperty(this, "verbose", {
-        enumerable: true,
-        configurable: true,
-        writable: true,
-        value: false
-      });
-      Object.defineProperty(this, "env", {
-        enumerable: true,
-        configurable: true,
-        writable: true,
-        value: "prod"
-      });
-      for (const prop in options) {
-        if (Object.prototype.hasOwnProperty.call(options, prop)) {
-          this[prop] = options[prop];
-        }
-      }
-      if (!hasNumber(this.organizationId)) {
-        this.organizationId = null;
-      }
-      if (!hasBoolean(this.verbose)) {
-        this.verbose = false;
-      }
-      if (!(hasString(this.env) && __classPrivateFieldGet$1(this, _CommonOptions_environments, "f").indexOf(this.env) >= 0)) {
-        this.env = "prod";
-      }
-      if (!hasBoolean(this.isShownInModal)) {
-        this.isShownInModal = true;
-      }
-      if (!hasString(this.idpServiceName)) {
-        this.idpServiceName = null;
-      }
-      if (!hasString(this.ssoUrl)) {
-        this.ssoUrl = null;
-      }
-    }
-  }
-  _CommonOptions_environments = /* @__PURE__ */ new WeakMap();
-  class ShortcutOptions {
-    constructor(options) {
-      var _a;
-      Object.defineProperty(this, "containerEl", {
-        enumerable: true,
-        configurable: true,
-        writable: true,
-        value: null
-      });
-      Object.defineProperty(this, "userToken", {
-        enumerable: true,
-        configurable: true,
-        writable: true,
-        value: null
-      });
-      Object.defineProperty(this, "linkedFields", {
-        enumerable: true,
-        configurable: true,
-        writable: true,
-        value: null
-      });
-      Object.defineProperty(this, "videoContext", {
-        enumerable: true,
-        configurable: true,
-        writable: true,
-        value: null
-      });
-      Object.defineProperty(this, "categoryNames", {
-        enumerable: true,
-        configurable: true,
-        writable: true,
-        value: null
-      });
-      Object.defineProperty(this, "storyboardId", {
-        enumerable: true,
-        configurable: true,
-        writable: true,
-        value: null
+        value: void 0
       });
       Object.defineProperty(this, "videoId", {
         enumerable: true,
@@ -200,53 +132,11 @@ var __spreadValues = (a, b) => {
         writable: true,
         value: null
       });
-      Object.defineProperty(this, "videoTitle", {
-        enumerable: true,
-        configurable: true,
-        writable: true,
-        value: null
-      });
-      Object.defineProperty(this, "showCreativeGallery", {
-        enumerable: true,
-        configurable: true,
-        writable: true,
-        value: false
-      });
-      Object.defineProperty(this, "showUploadGallery", {
-        enumerable: true,
-        configurable: true,
-        writable: true,
-        value: false
-      });
-      Object.defineProperty(this, "galleryAssets", {
-        enumerable: true,
-        configurable: true,
-        writable: true,
-        value: null
-      });
-      Object.defineProperty(this, "destLanguage", {
-        enumerable: true,
-        configurable: true,
-        writable: true,
-        value: null
-      });
-      Object.defineProperty(this, "showSaveForLater", {
-        enumerable: true,
-        configurable: true,
-        writable: true,
-        value: false
-      });
       Object.defineProperty(this, "on", {
         enumerable: true,
         configurable: true,
         writable: true,
-        value: { ready: noop }
-      });
-      Object.defineProperty(this, "kalturaProperties", {
-        enumerable: true,
-        configurable: true,
-        writable: true,
-        value: null
+        value: { loaded: DEFAULT.CALLBACK_LOADED }
       });
       for (const prop in options) {
         if (Object.prototype.hasOwnProperty.call(options, prop)) {
@@ -256,45 +146,15 @@ var __spreadValues = (a, b) => {
       if (!hasHTMLElement(this.containerEl)) {
         this.containerEl = null;
       }
-      if (!hasString(this.userToken)) {
-        this.userToken = null;
-      }
-      if (!hasObject(this.linkedFields)) {
-        this.linkedFields = null;
-      }
-      if (!hasString(this.videoContext)) {
-        this.videoContext = null;
-      }
-      if (!hasString(this.categoryNames)) {
-        this.categoryNames = null;
-      }
-      if (!hasString(this.storyboardId)) {
-        this.storyboardId = null;
+      if (!hasBoolean(this.isShownInModal)) {
+        this.isShownInModal = !this.containerEl;
       }
       if (!hasString(this.videoId)) {
         this.videoId = null;
       }
-      if (!hasString(this.videoTitle)) {
-        this.videoTitle = null;
-      }
-      if (!hasBoolean(this.showCreativeGallery)) {
-        this.showCreativeGallery = false;
-      }
-      if (!hasBoolean(this.showUploadGallery)) {
-        this.showUploadGallery = false;
-      }
-      if (!hasArray(this.galleryAssets)) {
-        this.galleryAssets = null;
-      }
-      if (!hasString(this.destLanguage)) {
-        this.destLanguage = null;
-      }
-      if (!hasBoolean(this.showSaveForLater)) {
-        this.showSaveForLater = false;
-      }
-      this.on = hasObject(this.on) ? this.on : { ready: noop };
-      if (typeof ((_a = this.on) == null ? void 0 : _a.ready) !== "function") {
-        this.on.ready = noop;
+      this.on = hasObject(this.on) ? this.on : { loaded: DEFAULT.CALLBACK_LOADED };
+      if (typeof ((_a = this.on) == null ? void 0 : _a.loaded) !== "function") {
+        this.on.loaded = DEFAULT.CALLBACK_LOADED;
       }
     }
   }
@@ -304,10 +164,14 @@ var __spreadValues = (a, b) => {
     $el.classList.add(CONTAINER_CLASS);
     return $el;
   }
+  function createSpinner$() {
+    const $el = document.createElement("DIV");
+    $el.classList.add(SPINNER_CLASS);
+    return $el;
+  }
   function createIframe$(uuid2, src) {
     const $el = document.createElement("IFRAME");
     $el.dataset["uuid"] = uuid2;
-    $el.id = IFRAME_ID;
     $el.classList.add(IFRAME_CLASS);
     $el.setAttribute("allow", "fullscreen *; microphone *;camera *;display-capture *;");
     $el.setAttribute("src", src);
@@ -317,24 +181,51 @@ var __spreadValues = (a, b) => {
     const $el = document.createElement("STYLE");
     $el.dataset.uuid = uuid2;
     $el.textContent = normalizeSpace(`
-    .${CONTAINER_CLASS}[data-uuid="${uuid2}"]:not(:empty) {
+    .${BODY_WHEN_MOUNTED_CLASS} {
+      overscroll-behavior-x: none;
+      overflow: hidden;
+    }
+    .${BODY_WHEN_MOUNTED_CLASS} .${CONTAINER_CLASS} {
+      box-sizing: border-box;
       position: fixed;
-      height: 100%;
-      width: 100%;
       top: 0;
       left: 0;
-      padding: 5vh 5vw;
-      box-sizing: border-box;
-      background: rgba(0, 0, 0, 0.6);
-      box-sizing: border-box;
+      height: 100%;
+      width: 100%;
       display: flex;
       align-items: center;
       justify-content: center;
+      background: rgba(0, 0, 0, 0.6);
     }
-    .${CONTAINER_CLASS}[data-uuid="${uuid2}"]:not(:empty) .${IFRAME_CLASS} {
+    .${BODY_WHEN_MOUNTED_CLASS} .${CONTAINER_CLASS} .${SPINNER_CLASS} {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 80px;
+      height: 50px;
+      margin-left: -40px;
+      margin-top: -25px;
+      background-image: url("data:image/svg+xml,%3Csvg width='38' height='38' viewBox='0 0 38 38' xmlns='http://www.w3.org/2000/svg'%3E%3Cdefs%3E%3ClinearGradient x1='8.042%25' y1='0%25' x2='65.682%25' y2='23.865%25' id='a'%3E%3Cstop stop-color='%2306A9F4' stop-opacity='0' offset='0%25'/%3E%3Cstop stop-color='%2306A9F4' stop-opacity='.331' offset='63.146%25'/%3E%3Cstop stop-color='%2306A9F4' offset='100%25'/%3E%3C/linearGradient%3E%3C/defs%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg transform='translate(1 1)'%3E%3Cpath d='M36 18c0-9.94-8.06-18-18-18' id='Oval-2' stroke='url(%23a)' stroke-width='2'%3E%3CanimateTransform attributeName='transform' type='rotate' from='0 18 18' to='360 18 18' dur='0.9s' repeatCount='indefinite' /%3E%3C/path%3E%3Ccircle fill='%2306A9F4' cx='36' cy='18' r='1'%3E%3CanimateTransform attributeName='transform' type='rotate' from='0 18 18' to='360 18 18' dur='0.9s' repeatCount='indefinite' /%3E%3C/circle%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-size: 100% 100%;
+    }
+    .${BODY_WHEN_MOUNTED_CLASS} .${CONTAINER_CLASS} .${IFRAME_CLASS} {
+      border: none;
       width: 100%;
       height: 100%;
-      border: none;
+    }
+    @media (min-width: 1440px) {
+      .${BODY_WHEN_MOUNTED_CLASS} .${CONTAINER_CLASS} .${IFRAME_CLASS} {
+        max-width: 90%;
+        max-height: 90%;
+        min-width: 1280px;
+      }
+    }
+    @media (max-width: 1440px) {
+      .${BODY_WHEN_MOUNTED_CLASS} .${CONTAINER_CLASS} .${IFRAME_CLASS} {
+        max-width: 100%;
+        max-height: 100%;
+      }
     }
   `);
     return $el;
@@ -355,7 +246,7 @@ var __spreadValues = (a, b) => {
       throw new TypeError("Cannot write private member to an object whose class did not declare it");
     return kind === "a" ? f.call(receiver, value) : f ? f.value = value : state.set(receiver, value), value;
   };
-  var _WochitEmbeddedApp_instances, _WochitEmbeddedApp_uuid, _WochitEmbeddedApp_$iframe, _WochitEmbeddedApp_getContainer$, _WochitEmbeddedApp_getIframe$, _WochitEmbeddedApp_isIframeMounted, _WochitEmbeddedApp_unmountIframe, _WochitEmbeddedApp_mountIframe, _WochitEmbeddedApp_isRelevantMessage, _WochitEmbeddedApp_onMessage, _WochitEmbeddedApp_onShortcutReady, _WochitEmbeddedApp_onStudioReady, _WochitEmbeddedApp_onShortcutApplicationEvent;
+  var _WochitEmbeddedApp_instances, _WochitEmbeddedApp_uuid, _WochitEmbeddedApp_$iframe, _WochitEmbeddedApp_$spinner, _WochitEmbeddedApp_getContainer$, _WochitEmbeddedApp_getIframe$, _WochitEmbeddedApp_isIframeMounted, _WochitEmbeddedApp_unmountIframe, _WochitEmbeddedApp_mountIframe, _WochitEmbeddedApp_unmountSpinner, _WochitEmbeddedApp_isRelevantMessage, _WochitEmbeddedApp_onMessage, _WochitEmbeddedApp_onShortcutLoaded, _WochitEmbeddedApp_onStudioLoaded, _WochitEmbeddedApp_onShortcutReady, _WochitEmbeddedApp_onShortcutApplicationEvent;
   let common$1;
   let shortcut$1;
   class WochitEmbeddedApp {
@@ -369,6 +260,7 @@ var __spreadValues = (a, b) => {
       });
       _WochitEmbeddedApp_uuid.set(this, uuid());
       _WochitEmbeddedApp_$iframe.set(this, null);
+      _WochitEmbeddedApp_$spinner.set(this, null);
       window.addEventListener("message", (e) => {
         if (__classPrivateFieldGet(this, _WochitEmbeddedApp_instances, "m", _WochitEmbeddedApp_isRelevantMessage).call(this, e)) {
           __classPrivateFieldGet(this, _WochitEmbeddedApp_instances, "m", _WochitEmbeddedApp_onMessage).call(this, e);
@@ -384,14 +276,14 @@ var __spreadValues = (a, b) => {
       common$1 = _common;
       shortcut$1 = _shortcut;
     }
-    openShortcut() {
+    openVideoEditor() {
       if (__classPrivateFieldGet(this, _WochitEmbeddedApp_instances, "m", _WochitEmbeddedApp_isIframeMounted).call(this)) {
         __classPrivateFieldGet(this, _WochitEmbeddedApp_instances, "m", _WochitEmbeddedApp_unmountIframe).call(this);
       }
       __classPrivateFieldGet(this, _WochitEmbeddedApp_instances, "m", _WochitEmbeddedApp_mountIframe).call(this);
     }
   }
-  _WochitEmbeddedApp_uuid = /* @__PURE__ */ new WeakMap(), _WochitEmbeddedApp_$iframe = /* @__PURE__ */ new WeakMap(), _WochitEmbeddedApp_instances = /* @__PURE__ */ new WeakSet(), _WochitEmbeddedApp_getContainer$ = function _WochitEmbeddedApp_getContainer$2() {
+  _WochitEmbeddedApp_uuid = /* @__PURE__ */ new WeakMap(), _WochitEmbeddedApp_$iframe = /* @__PURE__ */ new WeakMap(), _WochitEmbeddedApp_$spinner = /* @__PURE__ */ new WeakMap(), _WochitEmbeddedApp_instances = /* @__PURE__ */ new WeakSet(), _WochitEmbeddedApp_getContainer$ = function _WochitEmbeddedApp_getContainer$2() {
     return document.querySelector(`.${CONTAINER_CLASS}[data-uuid="${__classPrivateFieldGet(this, _WochitEmbeddedApp_uuid, "f")}"]`);
   }, _WochitEmbeddedApp_getIframe$ = function _WochitEmbeddedApp_getIframe$2() {
     return document.querySelector(`.${IFRAME_CLASS}[data-uuid="${__classPrivateFieldGet(this, _WochitEmbeddedApp_uuid, "f")}"]`);
@@ -399,62 +291,88 @@ var __spreadValues = (a, b) => {
     return !!__classPrivateFieldGet(this, _WochitEmbeddedApp_instances, "m", _WochitEmbeddedApp_getIframe$).call(this);
   }, _WochitEmbeddedApp_unmountIframe = function _WochitEmbeddedApp_unmountIframe2() {
     var _a;
-    (_a = __classPrivateFieldGet(this, _WochitEmbeddedApp_instances, "m", _WochitEmbeddedApp_getContainer$).call(this)) == null ? void 0 : _a.replaceChildren();
+    if (shortcut$1.containerEl) {
+      shortcut$1.containerEl.replaceChildren();
+    } else {
+      (_a = __classPrivateFieldGet(this, _WochitEmbeddedApp_instances, "m", _WochitEmbeddedApp_getContainer$).call(this)) == null ? void 0 : _a.remove();
+    }
     __classPrivateFieldSet(this, _WochitEmbeddedApp_$iframe, null, "f");
+    document.body.classList.remove(BODY_WHEN_MOUNTED_CLASS);
   }, _WochitEmbeddedApp_mountIframe = function _WochitEmbeddedApp_mountIframe2() {
     let $container = shortcut$1.containerEl;
+    const $df = document.createDocumentFragment();
     if ($container) {
       $container.dataset.uuid = __classPrivateFieldGet(this, _WochitEmbeddedApp_uuid, "f");
       $container.classList.add(CONTAINER_CLASS);
     } else {
-      $container = __classPrivateFieldGet(this, _WochitEmbeddedApp_instances, "m", _WochitEmbeddedApp_getContainer$).call(this);
-      if (!$container) {
-        $container = createContainer$(__classPrivateFieldGet(this, _WochitEmbeddedApp_uuid, "f"));
-        document.body.appendChild($container);
-      }
+      $container = createContainer$(__classPrivateFieldGet(this, _WochitEmbeddedApp_uuid, "f"));
     }
-    const $style = createStyle$(__classPrivateFieldGet(this, _WochitEmbeddedApp_uuid, "f"));
-    $container.appendChild($style);
-    const src = `${ENV_URL_SHORTCUT[common$1.env]}?t=${Date.now()}`;
+    if (!shortcut$1.containerEl) {
+      const $style = createStyle$(__classPrivateFieldGet(this, _WochitEmbeddedApp_uuid, "f"));
+      $df.appendChild($style);
+    }
+    __classPrivateFieldSet(this, _WochitEmbeddedApp_$spinner, createSpinner$(), "f");
+    $df.appendChild(__classPrivateFieldGet(this, _WochitEmbeddedApp_$spinner, "f"));
+    const src = `${shortcut$1.envUrl}?t=${Date.now().toString(36)}`;
     __classPrivateFieldSet(this, _WochitEmbeddedApp_$iframe, createIframe$(__classPrivateFieldGet(this, _WochitEmbeddedApp_uuid, "f"), src), "f");
-    $container.appendChild(__classPrivateFieldGet(this, _WochitEmbeddedApp_$iframe, "f"));
+    $df.appendChild(__classPrivateFieldGet(this, _WochitEmbeddedApp_$iframe, "f"));
+    $container.appendChild($df);
+    if (!shortcut$1.containerEl) {
+      document.body.appendChild($container);
+    }
+    document.body.classList.add(BODY_WHEN_MOUNTED_CLASS);
+  }, _WochitEmbeddedApp_unmountSpinner = function _WochitEmbeddedApp_unmountSpinner2() {
+    var _a;
+    (_a = __classPrivateFieldGet(this, _WochitEmbeddedApp_$spinner, "f")) == null ? void 0 : _a.remove();
   }, _WochitEmbeddedApp_isRelevantMessage = function _WochitEmbeddedApp_isRelevantMessage2(e) {
     const originUrl = new URL(e.origin);
     return originUrl.hostname.endsWith(WOCHIT_DOMAIN_MASK) && hasObject(common$1) && hasObject(shortcut$1) && __classPrivateFieldGet(this, _WochitEmbeddedApp_$iframe, "f") !== null;
   }, _WochitEmbeddedApp_onMessage = function _WochitEmbeddedApp_onMessage2(e) {
-    var _a;
     this.log("#onMessage", e.data);
-    if (e.data === INCOMING_MESSAGE.SHORTCUT_READY) {
+    if (e.data === INCOMING_MESSAGE.SHORTCUT_LOADED) {
+      __classPrivateFieldGet(this, _WochitEmbeddedApp_instances, "m", _WochitEmbeddedApp_onShortcutLoaded).call(this);
+    } else if (e.data === INCOMING_MESSAGE.SHORTCUT_READY) {
       __classPrivateFieldGet(this, _WochitEmbeddedApp_instances, "m", _WochitEmbeddedApp_onShortcutReady).call(this);
-    } else if (e.data === INCOMING_MESSAGE.STUDIO_READY) {
-      __classPrivateFieldGet(this, _WochitEmbeddedApp_instances, "m", _WochitEmbeddedApp_onStudioReady).call(this);
-    } else if (typeof e.data === "object") {
-      if (((_a = e.data) == null ? void 0 : _a.type) === INCOMING_MESSAGE.APPLICATION_EVENT) {
+    } else if (e.data === INCOMING_MESSAGE.STUDIO_LOADED) {
+      __classPrivateFieldGet(this, _WochitEmbeddedApp_instances, "m", _WochitEmbeddedApp_onStudioLoaded).call(this);
+    } else if (e.data && typeof e.data === "object") {
+      if (e.data.type === INCOMING_MESSAGE.APPLICATION_EVENT && typeof e.data.type === "string") {
         __classPrivateFieldGet(this, _WochitEmbeddedApp_instances, "m", _WochitEmbeddedApp_onShortcutApplicationEvent).call(this, e);
       }
     }
-  }, _WochitEmbeddedApp_onShortcutReady = function _WochitEmbeddedApp_onShortcutReady2() {
-    var _a, _b, _c;
-    shortcut$1.on.ready((_a = __classPrivateFieldGet(this, _WochitEmbeddedApp_$iframe, "f")) == null ? void 0 : _a.contentWindow);
-    (_c = (_b = __classPrivateFieldGet(this, _WochitEmbeddedApp_$iframe, "f")) == null ? void 0 : _b.contentWindow) == null ? void 0 : _c.postMessage(__spreadValues({
+  }, _WochitEmbeddedApp_onShortcutLoaded = function _WochitEmbeddedApp_onShortcutLoaded2() {
+    if (!__classPrivateFieldGet(this, _WochitEmbeddedApp_$iframe, "f") || !__classPrivateFieldGet(this, _WochitEmbeddedApp_$iframe, "f").contentWindow) {
+      return;
+    }
+    shortcut$1.on.loaded(__classPrivateFieldGet(this, _WochitEmbeddedApp_$iframe, "f"));
+    __classPrivateFieldGet(this, _WochitEmbeddedApp_$iframe, "f").contentWindow.postMessage(__spreadValues({
       cmd: OUTGOING_MESSAGE.SHORTCUT_OPTIONS,
       version: "0.0.0",
       JWT: shortcut$1.userToken
-    }, JSON.parse(JSON.stringify(__spreadValues(__spreadValues({}, common$1), shortcut$1)))), ENV_URL_SHORTCUT[common$1.env]);
-  }, _WochitEmbeddedApp_onStudioReady = function _WochitEmbeddedApp_onStudioReady2() {
-    var _a, _b;
-    (_b = (_a = __classPrivateFieldGet(this, _WochitEmbeddedApp_$iframe, "f")) == null ? void 0 : _a.contentWindow) == null ? void 0 : _b.postMessage({
+    }, JSON.parse(JSON.stringify(__spreadValues(__spreadValues({}, common$1), shortcut$1)))), shortcut$1.envUrl);
+    __classPrivateFieldGet(this, _WochitEmbeddedApp_instances, "m", _WochitEmbeddedApp_unmountSpinner).call(this);
+  }, _WochitEmbeddedApp_onStudioLoaded = function _WochitEmbeddedApp_onStudioLoaded2() {
+    if (!__classPrivateFieldGet(this, _WochitEmbeddedApp_$iframe, "f") || !__classPrivateFieldGet(this, _WochitEmbeddedApp_$iframe, "f").contentWindow) {
+      return;
+    }
+    shortcut$1.on.loaded(__classPrivateFieldGet(this, _WochitEmbeddedApp_$iframe, "f"));
+    __classPrivateFieldGet(this, _WochitEmbeddedApp_$iframe, "f").contentWindow.postMessage(__spreadValues({
       cmd: OUTGOING_MESSAGE.STUDIO_OPTIONS,
+      version: "0.0.0",
       JWT: shortcut$1.userToken,
-      kalturaProperties: shortcut$1.kalturaProperties,
-      isReEditing: !!shortcut$1.videoId
-    }, "*");
+      isReEditing: !!(shortcut$1 == null ? void 0 : shortcut$1.videoId)
+    }, JSON.parse(JSON.stringify(__spreadValues(__spreadValues({}, common$1), shortcut$1)))), "*");
+    __classPrivateFieldGet(this, _WochitEmbeddedApp_instances, "m", _WochitEmbeddedApp_unmountSpinner).call(this);
+  }, _WochitEmbeddedApp_onShortcutReady = function _WochitEmbeddedApp_onShortcutReady2() {
+    if (typeof shortcut$1.on.ready === "function") {
+      shortcut$1.on.ready();
+    }
   }, _WochitEmbeddedApp_onShortcutApplicationEvent = function _WochitEmbeddedApp_onShortcutApplicationEvent2(e) {
-    var _a, _b;
     const eventName = e.data.event.toLowerCase();
     this.log("#onShortcutApplicationEvent", eventName, e.data.payload);
-    if (typeof shortcut$1.on[eventName] === "function") {
-      (_b = shortcut$1 == null ? void 0 : (_a = shortcut$1.on)[eventName]) == null ? void 0 : _b.call(_a, e.data.payload);
+    const callback = shortcut$1.on[eventName];
+    if (typeof callback === "function") {
+      callback(e.data.payload);
     }
     if (eventName === "abort") {
       __classPrivateFieldGet(this, _WochitEmbeddedApp_instances, "m", _WochitEmbeddedApp_unmountIframe).call(this);
@@ -470,28 +388,37 @@ var __spreadValues = (a, b) => {
     } else if (!hasString(options.channelId)) {
       logError("calling config() without channelId");
       return;
+    } else if (!hasString(options.userToken) && options.skipLogin !== true) {
+      logError("calling config() without userToken");
+      return;
     }
     common = new CommonOptions(options);
     app.verbose = common.verbose;
     app.log("config", common);
   }
-  function openShortcut(options) {
+  function openVideoEditor(options) {
     if (!common) {
-      logError("calling openShortcut() before config()");
+      logError("calling openVideoEditor() before config()");
       return;
     }
-    shortcut = new ShortcutOptions(hasObject(options) ? options : {});
-    app.log("openShortcut", shortcut);
+    shortcut = new ApplicationOptions(hasObject(options) ? options : {});
+    try {
+      new URL(shortcut.envUrl);
+    } catch (xcp) {
+      logError(`calling openVideoEditor() with invalid envUrl: "${options == null ? void 0 : options.envUrl}"`);
+      return;
+    }
+    app.log("openVideoEditor", shortcut);
     app.setContext(common, shortcut);
-    app.openShortcut();
+    app.openVideoEditor();
   }
   var wt = {
     config,
-    openShortcut
+    openVideoEditor
   };
   function wochitSnippet() {
     wt.config({ channelId: "1" });
-    wt.openShortcut({});
+    wt.openVideoEditor({});
     console.log("wochit-snippet", "0.0.0", window.wt);
   }
   wochitSnippet();
