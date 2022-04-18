@@ -6,14 +6,15 @@
   "files": [
     "dist"
   ],
-  "main": "./dist/wochit-embedded.umd.js",
-  "module": "./dist/wochit-embedded.es.js",
+  "main": "./dist/module.umd.js",
+  "module": "./dist/module.es.js",
   "exports": {
     ".": {
-      "import": "./dist/wochit-embedded.es.js",
-      "require": "./dist/wochit-embedded.umd.js"
+      "import": "./dist/module.es.js",
+      "require": "./dist/module.umd.js"
     }
   },
+  "types": "./dist/module.d.ts",
   "scripts": {
     "dev:module": "tsc && vite build --config vite-module.config.js --watch",
     "dev:snippet": "tsc && vite build --config vite-snippet.config.js --watch",
