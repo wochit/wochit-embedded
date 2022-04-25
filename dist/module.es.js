@@ -277,7 +277,7 @@ class WochitEmbeddedApp {
     common$1 = _common;
     shortcut$1 = _shortcut;
   }
-  openVideoEditor() {
+  mount() {
     if (__classPrivateFieldGet(this, _WochitEmbeddedApp_instances, "m", _WochitEmbeddedApp_isIframeMounted).call(this)) {
       __classPrivateFieldGet(this, _WochitEmbeddedApp_instances, "m", _WochitEmbeddedApp_unmountIframe).call(this);
     }
@@ -346,11 +346,21 @@ _WochitEmbeddedApp_uuid = /* @__PURE__ */ new WeakMap(), _WochitEmbeddedApp_$ifr
     return;
   }
   shortcut$1.on.loaded(__classPrivateFieldGet(this, _WochitEmbeddedApp_$iframe, "f"));
+  const payload = JSON.parse(JSON.stringify(__spreadValues(__spreadValues({}, common$1), shortcut$1), (k, v) => {
+    return [
+      "on",
+      "containerEl",
+      "envUrl",
+      "verbose",
+      "skipLogin",
+      "userToken"
+    ].includes(k) ? void 0 : v;
+  }));
   __classPrivateFieldGet(this, _WochitEmbeddedApp_$iframe, "f").contentWindow.postMessage(__spreadValues({
     cmd: OUTGOING_MESSAGE.SHORTCUT_OPTIONS,
     version: "0.0.0",
     JWT: common$1.userToken
-  }, JSON.parse(JSON.stringify(__spreadValues(__spreadValues({}, common$1), shortcut$1)))), shortcut$1.envUrl);
+  }, payload), shortcut$1.envUrl);
   __classPrivateFieldGet(this, _WochitEmbeddedApp_instances, "m", _WochitEmbeddedApp_unmountSpinner).call(this);
 }, _WochitEmbeddedApp_onStudioLoaded = function _WochitEmbeddedApp_onStudioLoaded2() {
   if (!__classPrivateFieldGet(this, _WochitEmbeddedApp_$iframe, "f") || !__classPrivateFieldGet(this, _WochitEmbeddedApp_$iframe, "f").contentWindow) {
@@ -397,24 +407,24 @@ function config(options) {
   app.verbose = common.verbose;
   app.log("config", common);
 }
-function openVideoEditor(options) {
+function openVideoCreator(options) {
   if (!common) {
-    logError("calling openVideoEditor() before config()");
+    logError("calling openVideoCreator() before config()");
     return;
   }
   shortcut = new ApplicationOptions(hasObject(options) ? options : {});
   try {
     new URL(shortcut.envUrl);
   } catch (xcp) {
-    logError(`calling openVideoEditor() with invalid envUrl: "${options == null ? void 0 : options.envUrl}"`);
+    logError(`calling openVideoCreator() with invalid envUrl: "${options == null ? void 0 : options.envUrl}"`);
     return;
   }
-  app.log("openVideoEditor", shortcut);
+  app.log("openVideoCreator", shortcut);
   app.setContext(common, shortcut);
-  app.openVideoEditor();
+  app.mount();
 }
 var module = {
   config,
-  openVideoEditor
+  openVideoCreator
 };
-export { config, module as default, openVideoEditor };
+export { config, module as default, openVideoCreator };

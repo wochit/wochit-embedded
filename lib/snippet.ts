@@ -8,7 +8,7 @@ declare global {
 
 function wochitSnippet() {
   wt.config({ channelId: '1' });
-  wt.openVideoEditor({});
+  wt.openVideoCreator({});
 
   console.log('wochit-snippet', __APP_VERSION__, window.wt);
 }

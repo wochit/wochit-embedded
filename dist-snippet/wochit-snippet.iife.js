@@ -195,7 +195,7 @@ var __spreadValues = (a, b) => {
       display: flex;
       align-items: center;
       justify-content: center;
-      background: rgba(0, 0, 0, 0.6);
+      background: rgba(0, 0, 0, 0.45);
     }
     .${BODY_WHEN_MOUNTED_CLASS} .${CONTAINER_CLASS} .${SPINNER_CLASS} {
       position: absolute;
@@ -219,6 +219,9 @@ var __spreadValues = (a, b) => {
         max-width: 90%;
         max-height: 90%;
         min-width: 1280px;
+        border-radius: 5px;
+        overflow: hidden;
+        filter: drop-shadow(-10px 4px 40px rgba(0, 0, 0, 0.25));
       }
     }
     @media (max-width: 1440px) {
@@ -276,7 +279,7 @@ var __spreadValues = (a, b) => {
       common$1 = _common;
       shortcut$1 = _shortcut;
     }
-    openVideoEditor() {
+    mount() {
       if (__classPrivateFieldGet(this, _WochitEmbeddedApp_instances, "m", _WochitEmbeddedApp_isIframeMounted).call(this)) {
         __classPrivateFieldGet(this, _WochitEmbeddedApp_instances, "m", _WochitEmbeddedApp_unmountIframe).call(this);
       }
@@ -345,11 +348,21 @@ var __spreadValues = (a, b) => {
       return;
     }
     shortcut$1.on.loaded(__classPrivateFieldGet(this, _WochitEmbeddedApp_$iframe, "f"));
+    const payload = JSON.parse(JSON.stringify(__spreadValues(__spreadValues({}, common$1), shortcut$1), (k, v) => {
+      return [
+        "on",
+        "containerEl",
+        "envUrl",
+        "verbose",
+        "skipLogin",
+        "userToken"
+      ].includes(k) ? void 0 : v;
+    }));
     __classPrivateFieldGet(this, _WochitEmbeddedApp_$iframe, "f").contentWindow.postMessage(__spreadValues({
       cmd: OUTGOING_MESSAGE.SHORTCUT_OPTIONS,
       version: "0.0.0",
-      JWT: shortcut$1.userToken
-    }, JSON.parse(JSON.stringify(__spreadValues(__spreadValues({}, common$1), shortcut$1)))), shortcut$1.envUrl);
+      JWT: common$1.userToken
+    }, payload), shortcut$1.envUrl);
     __classPrivateFieldGet(this, _WochitEmbeddedApp_instances, "m", _WochitEmbeddedApp_unmountSpinner).call(this);
   }, _WochitEmbeddedApp_onStudioLoaded = function _WochitEmbeddedApp_onStudioLoaded2() {
     if (!__classPrivateFieldGet(this, _WochitEmbeddedApp_$iframe, "f") || !__classPrivateFieldGet(this, _WochitEmbeddedApp_$iframe, "f").contentWindow) {
@@ -359,7 +372,7 @@ var __spreadValues = (a, b) => {
     __classPrivateFieldGet(this, _WochitEmbeddedApp_$iframe, "f").contentWindow.postMessage(__spreadValues({
       cmd: OUTGOING_MESSAGE.STUDIO_OPTIONS,
       version: "0.0.0",
-      JWT: shortcut$1.userToken,
+      JWT: common$1.userToken,
       isReEditing: !!(shortcut$1 == null ? void 0 : shortcut$1.videoId)
     }, JSON.parse(JSON.stringify(__spreadValues(__spreadValues({}, common$1), shortcut$1)))), "*");
     __classPrivateFieldGet(this, _WochitEmbeddedApp_instances, "m", _WochitEmbeddedApp_unmountSpinner).call(this);
@@ -396,29 +409,29 @@ var __spreadValues = (a, b) => {
     app.verbose = common.verbose;
     app.log("config", common);
   }
-  function openVideoEditor(options) {
+  function openVideoCreator(options) {
     if (!common) {
-      logError("calling openVideoEditor() before config()");
+      logError("calling openVideoCreator() before config()");
       return;
     }
     shortcut = new ApplicationOptions(hasObject(options) ? options : {});
     try {
       new URL(shortcut.envUrl);
     } catch (xcp) {
-      logError(`calling openVideoEditor() with invalid envUrl: "${options == null ? void 0 : options.envUrl}"`);
+      logError(`calling openVideoCreator() with invalid envUrl: "${options == null ? void 0 : options.envUrl}"`);
       return;
     }
-    app.log("openVideoEditor", shortcut);
+    app.log("openVideoCreator", shortcut);
     app.setContext(common, shortcut);
-    app.openVideoEditor();
+    app.mount();
   }
   var wt = {
     config,
-    openVideoEditor
+    openVideoCreator
   };
   function wochitSnippet() {
     wt.config({ channelId: "1" });
-    wt.openVideoEditor({});
+    wt.openVideoCreator({});
     console.log("wochit-snippet", "0.0.0", window.wt);
   }
   wochitSnippet();

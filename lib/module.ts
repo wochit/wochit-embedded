@@ -24,9 +24,9 @@ export function config(options: ICommonOptions) {
   app.log('config', common);
 }
 
-export function openVideoEditor(options?: IApplicationOptions) {
+export function openVideoCreator(options?: IApplicationOptions) {
   if (!common) {
-    logError('calling openVideoEditor() before config()');
+    logError('calling openVideoCreator() before config()');
     return;
   }
 
@@ -38,17 +38,17 @@ export function openVideoEditor(options?: IApplicationOptions) {
     new URL(shortcut.envUrl);
   } catch (xcp) {
     logError(
-      `calling openVideoEditor() with invalid envUrl: "${options?.envUrl}"`
+      `calling openVideoCreator() with invalid envUrl: "${options?.envUrl}"`
     );
     return;
   }
 
-  app.log('openVideoEditor', shortcut);
+  app.log('openVideoCreator', shortcut);
   app.setContext(common, shortcut);
-  app.openVideoEditor();
+  app.mount();
 }
 
 export default {
   config,
-  openVideoEditor,
+  openVideoCreator,
 };

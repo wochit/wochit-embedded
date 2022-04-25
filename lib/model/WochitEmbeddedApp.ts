@@ -118,7 +118,7 @@ export class WochitEmbeddedApp {
     shortcut = _shortcut;
   }
 
-  openVideoEditor(): void {
+  mount(): void {
     if (this.#isIframeMounted()) {
       this.#unmountIframe();
     }
@@ -155,6 +155,26 @@ export class WochitEmbeddedApp {
     }
   }
 
+  #preparePayloadForIframeWindow(
+    common: CommonOptions,
+    shortcut: ApplicationOptions
+  ) {
+    return JSON.parse(
+      JSON.stringify({ ...common, ...shortcut }, (k, v) => {
+        return [
+          'on',
+          'containerEl',
+          'envUrl',
+          'verbose',
+          'skipLogin',
+          'userToken',
+        ].includes(k)
+          ? undefined
+          : v;
+      })
+    );
+  }
+
   #onShortcutLoaded(): void {
     if (!this.#$iframe || !this.#$iframe.contentWindow) {
       return;
@@ -167,7 +187,7 @@ export class WochitEmbeddedApp {
         cmd: OUTGOING_MESSAGE.SHORTCUT_OPTIONS,
         version: __APP_VERSION__,
         JWT: common.userToken,
-        ...JSON.parse(JSON.stringify({ ...common, ...shortcut })),
+        ...this.#preparePayloadForIframeWindow(common, shortcut),
       },
       shortcut.envUrl
     );
@@ -188,7 +208,7 @@ export class WochitEmbeddedApp {
         version: __APP_VERSION__,
         JWT: common.userToken,
         isReEditing: !!shortcut?.videoId,
-        ...JSON.parse(JSON.stringify({ ...common, ...shortcut })),
+        ...this.#preparePayloadForIframeWindow(common, shortcut),
       },
       '*'
     );
