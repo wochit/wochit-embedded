@@ -185,7 +185,7 @@ export class WochitEmbeddedApp {
     this.#$iframe.contentWindow.postMessage(
       {
         cmd: OUTGOING_MESSAGE.SHORTCUT_OPTIONS,
-        version: __APP_VERSION__,
+        iframeVersion: __APP_VERSION__,
         JWT: common.userToken,
         ...this.#preparePayloadForIframeWindow(common, shortcut),
       },
@@ -205,7 +205,7 @@ export class WochitEmbeddedApp {
     this.#$iframe.contentWindow.postMessage(
       {
         cmd: OUTGOING_MESSAGE.STUDIO_OPTIONS,
-        version: __APP_VERSION__,
+        iframeVersion: __APP_VERSION__,
         JWT: common.userToken,
         isReEditing: !!shortcut?.videoId,
         ...this.#preparePayloadForIframeWindow(common, shortcut),
