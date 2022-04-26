@@ -1,23 +1,12 @@
-import { hasBoolean, hasNumber, hasString } from '../api/toolkit';
+import { hasBoolean, hasString } from '../api/toolkit';
+import { DEFAULT } from './const';
 
 export class CommonOptions implements ICommonOptions {
-  #environments: TEnvironment[] = [
-    'test',
-    'prod',
-    'stage',
-    'test-local',
-    'prod-local',
-    'test-docker',
-  ];
-
-  readonly channelId: string = '';
-  readonly organizationId: number | null = null;
-  readonly isShownInModal: boolean = true;
-  readonly idpServiceName: string | null = null;
-  readonly ssoUrl: string | null = null;
-  readonly verbose: boolean = false;
-  readonly env: TEnvironment = 'prod';
   [key: string]: unknown;
+  readonly channelId: string = '';
+  readonly userToken: string | null = null;
+  readonly skipLogin: boolean = DEFAULT.SKIP_LOGIN;
+  readonly verbose: boolean = DEFAULT.VERBOSE;
 
   constructor(options: ICommonOptions) {
     for (const prop in options) {
@@ -26,28 +15,16 @@ export class CommonOptions implements ICommonOptions {
       }
     }
 
-    if (!hasNumber(this.organizationId)) {
-      this.organizationId = null;
+    if (!hasBoolean(this.skipLogin)) {
+      this.skipLogin = DEFAULT.SKIP_LOGIN;
     }
 
     if (!hasBoolean(this.verbose)) {
       this.verbose = false;
     }
 
-    if (!(hasString(this.env) && this.#environments.indexOf(this.env) >= 0)) {
-      this.env = 'prod';
-    }
-
-    if (!hasBoolean(this.isShownInModal)) {
-      this.isShownInModal = true;
-    }
-
-    if (!hasString(this.idpServiceName)) {
-      this.idpServiceName = null;
-    }
-
-    if (!hasString(this.ssoUrl)) {
-      this.ssoUrl = null;
+    if (!hasString(this.envUrl)) {
+      this.envUrl = DEFAULT.ENV_URL;
     }
   }
 }

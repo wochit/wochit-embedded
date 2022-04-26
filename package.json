@@ -4,7 +4,9 @@
   "private": false,
   "description": "description",
   "files": [
-    "dist"
+    "dist",
+    "README.md",
+    "LICENSE"
   ],
   "main": "./dist/module.umd.js",
   "module": "./dist/module.es.js",
