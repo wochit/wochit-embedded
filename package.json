@@ -8,7 +8,7 @@
     "README.md",
     "LICENSE"
   ],
-  "main": "./dist/module.umd.js",
+  "main": "./dist/module.es.js",
   "module": "./dist/module.es.js",
   "exports": {
     ".": {
@@ -18,12 +18,12 @@
   },
   "types": "./dist/module.d.ts",
   "scripts": {
-    "dev:module": "tsc && vite build --config vite-module.config.js --watch",
-    "dev:snippet": "tsc && vite build --config vite-snippet.config.js --watch",
+    "dev:module": "tsc && vite build --config vite-module.config.ts --watch",
+    "dev:snippet": "tsc && vite build --config vite-snippet.config.ts --watch",
     "test": "echo \"test\" && exit 0",
-    "build:module": "tsc && vite build --config vite-module.config.js",
-    "build:snippet": "tsc && vite build --config vite-snippet.config.js",
-    "build:snippet:min": "tsc && vite build --config vite-snippet-min.config.js",
+    "build:module": "rm -rf dist && tsc -p tsconfig.module.json && vite build --config vite-module.config.ts",
+    "build:snippet": "rm -rf dist-snippet && tsc -p tsconfig.snippet.json && vite build --config vite-snippet.config.ts",
+    "build:snippet:min": "tsc -p tsconfig.snippet.json && vite build --config vite-snippet-min.config.ts",
     "build:all": "npm run build:module && npm run build:snippet && npm run build:snippet:min"
   },
   "repository": {
@@ -43,6 +43,7 @@
   },
   "homepage": "https://github.com/wochit/wochit-embedded#readme",
   "devDependencies": {
+    "@types/node": "^17.0.27",
     "@typescript-eslint/eslint-plugin": "^5.16.0",
     "@typescript-eslint/parser": "^5.16.0",
     "eslint": "^8.11.0",

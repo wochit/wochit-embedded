@@ -1,18 +1,18 @@
-import path from 'path';
+import { resolve } from 'path';
 import { defineConfig } from 'vite';
-import pkg from './package.json';
+import { version } from './package.json';
 
 export default defineConfig({
   define: {
-    __APP_VERSION__: JSON.stringify(pkg.version),
+    __APP_VERSION__: JSON.stringify(version),
   },
   build: {
-    emptyOutDir: true,
+    emptyOutDir: false,
     outDir: 'dist-snippet',
     minify: false,
     sourcemap: false,
     lib: {
-      entry: path.resolve(__dirname, 'lib/snippet.ts'),
+      entry: resolve(__dirname, 'lib/snippet.ts'),
       name: '__unused__',
       formats: ['iife'],
       fileName: (format) => `wochit-snippet.${format}.js`,

@@ -1,5 +1,8 @@
-import { CommonOptions } from './model/CommonOptions';
-import { ApplicationOptions } from './model/ApplicationOptions';
+import { CommonOptions, ICommonOptions } from './model/CommonOptions';
+import {
+  ApplicationOptions,
+  IApplicationOptions,
+} from './model/ApplicationOptions';
 import { WochitEmbeddedApp } from './model/WochitEmbeddedApp';
 import { hasObject, hasString, logError } from './api/toolkit';
 
@@ -7,6 +10,10 @@ let common: CommonOptions;
 let shortcut: ApplicationOptions;
 const app = new WochitEmbeddedApp();
 
+/**
+ * one time integration configuration
+ * @param options
+ */
 export function config(options: ICommonOptions) {
   if (!hasObject(options)) {
     logError('calling config() without options');

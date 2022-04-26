@@ -1,6 +1,15 @@
 import { hasBoolean, hasString } from '../api/toolkit';
 import { DEFAULT } from './const';
 
+export interface ICommonOptions {
+  readonly channelId: string;
+  readonly userToken?: string | null;
+  readonly skipLogin?: boolean;
+  readonly verbose?: boolean;
+  /** for other props - see the online documentation */
+  [key: string]: unknown;
+}
+
 export class CommonOptions implements ICommonOptions {
   [key: string]: unknown;
   readonly channelId: string = '';

@@ -6,6 +6,32 @@ import {
 } from '../api/toolkit';
 import { DEFAULT } from './const';
 
+export interface IApplicationOptions {
+  readonly envUrl?: string;
+  readonly containerEl?: HTMLElement | null;
+  readonly isShownInModal?: boolean;
+  readonly videoId?: string | null;
+  readonly on?: IApplicationCallbacks;
+  /** for other props - see the online documentation */
+  [key: string]: unknown;
+}
+
+export declare type TLoadedCallback = ($iframe: HTMLIFrameElement) => void;
+export declare type TApplicationEventCallback = (payload: any) => void;
+
+export interface IApplicationCallbacks {
+  /**
+   * fired when main application resources are loaded but before application instantiated
+   */
+  loaded: TLoadedCallback;
+  /**
+   * Other callback names are not locked and opened application
+   * is free to introduce other events as development unfolds.
+   * Among already developed events are: 'abort', 'produce', 'save'
+   */
+  [key: string]: TApplicationEventCallback | unknown;
+}
+
 export class ApplicationOptions implements IApplicationOptions {
   [key: string]: unknown;
   readonly envUrl: string = DEFAULT.ENV_URL;

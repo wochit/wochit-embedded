@@ -1,5 +1,8 @@
 import { CommonOptions } from './CommonOptions';
-import { ApplicationOptions } from './ApplicationOptions';
+import {
+  ApplicationOptions,
+  TApplicationEventCallback,
+} from './ApplicationOptions';
 import { hasObject, uuid } from '../api/toolkit';
 import {
   createContainer$,
@@ -16,6 +19,8 @@ import {
   OUTGOING_MESSAGE,
   BODY_WHEN_MOUNTED_CLASS,
 } from './const';
+
+declare const __APP_VERSION__: string;
 
 type TWindowMessageData = 'shortcutLoaded' | 'studioLoaded' | 'shortcutReady';
 interface IApplicationEvent {
