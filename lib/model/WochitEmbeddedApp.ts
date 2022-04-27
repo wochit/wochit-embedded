@@ -212,7 +212,7 @@ export class WochitEmbeddedApp {
         cmd: OUTGOING_MESSAGE.STUDIO_OPTIONS,
         iframeVersion: __APP_VERSION__,
         JWT: common.userToken,
-        isReEditing: !!shortcut?.videoId,
+        isReEditing: !!shortcut.videoId,
         ...this.#preparePayloadForIframeWindow(common, shortcut),
       },
       '*'
@@ -222,9 +222,7 @@ export class WochitEmbeddedApp {
   }
 
   #onShortcutReady(): void {
-    if (typeof shortcut.on.ready === 'function') {
-      shortcut.on.ready();
-    }
+    shortcut.on.ready();
   }
 
   #onShortcutApplicationEvent(e: MessageEvent<IApplicationEvent>): void {

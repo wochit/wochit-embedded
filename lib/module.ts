@@ -11,8 +11,10 @@ let shortcut: ApplicationOptions;
 const app = new WochitEmbeddedApp();
 
 /**
- * one time integration configuration
- * @param options
+ * One time integration configuration.
+ * Call it where you have easy access to `channelId` and `userToken`.
+ * If called multiple times, only last time options are in effect.
+ * @param options {ICommonOptions}
  */
 export function config(options: ICommonOptions) {
   if (!hasObject(options)) {
@@ -31,6 +33,10 @@ export function config(options: ICommonOptions) {
   app.log('config', common);
 }
 
+/**
+ * Mounts iframe to the page
+ * @param [options] {IApplicationOptions}
+ */
 export function openVideoCreator(options?: IApplicationOptions) {
   if (!common) {
     logError('calling openVideoCreator() before config()');

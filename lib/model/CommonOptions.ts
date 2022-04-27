@@ -2,11 +2,26 @@ import { hasBoolean, hasString } from '../api/toolkit';
 import { DEFAULT } from './const';
 
 export interface ICommonOptions {
+  /**
+   * Integration channel id
+   */
   readonly channelId: string;
+  /**
+   * User authentication token
+   */
   readonly userToken?: string | null;
+  /**
+   * Ignore `userToken`
+   * @internal
+   */
   readonly skipLogin?: boolean;
+  /**
+   * Print @wochit/embedded information to the console
+   */
   readonly verbose?: boolean;
-  /** for other props - see the online documentation */
+  /**
+   * For other props - see the online documentation
+   */
   [key: string]: unknown;
 }
 

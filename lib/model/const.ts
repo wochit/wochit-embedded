@@ -20,5 +20,5 @@ export const DEFAULT = {
   SKIP_LOGIN: false,
   VERBOSE: false,
   ENV_URL: 'https://shortcut.wochit.com',
-  CALLBACK_LOADED: noop,
+  CALLBACK_STUB: noop,
 };

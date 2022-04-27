@@ -1,29 +1,49 @@
-import {
-  hasBoolean,
-  hasHTMLElement,
-  hasObject,
-  hasString,
-} from '../api/toolkit';
+import { hasBoolean, hasHTMLElement, hasObject } from '../api/toolkit';
 import { DEFAULT } from './const';
 
 export interface IApplicationOptions {
+  /**
+   * Open different url in iframe
+   * @internal
+   */
   readonly envUrl?: string;
+  /**
+   * If not specified the iframe appended into document.body element alongside with the style,
+   * Use this to create your own custom look and feel - iframe will be injected into this element
+   */
   readonly containerEl?: HTMLElement | null;
+  /**
+   * Render close modal button that will trigger `on.abort()` callback.
+   * if `isShownInModal` was not specified - it's value derived from existence of `containerEl`
+   * in such a way that if `containerEl` is not an element then we assume iframe is opened
+   * as a modal, and if `containerEl` is defined then iframe is embedded inline
+   */
   readonly isShownInModal?: boolean;
-  readonly videoId?: string | null;
+  /**
+   * Callbacks hub
+   */
   readonly on?: IApplicationCallbacks;
-  /** for other props - see the online documentation */
+  /**
+   * For other props - see the online documentation
+   */
   [key: string]: unknown;
 }
 
 export declare type TLoadedCallback = ($iframe: HTMLIFrameElement) => void;
+export declare type TReadyCallback = () => void;
 export declare type TApplicationEventCallback = (payload: any) => void;
 
 export interface IApplicationCallbacks {
   /**
-   * fired when main application resources are loaded but before application instantiated
+   * Fired when main application resources are loaded but before application
+   * instantiated
    */
   loaded: TLoadedCallback;
+  /**
+   * Fired when main application instantiated and ready to receive additional
+   * window message events
+   */
+  ready: TReadyCallback;
   /**
    * Other callback names are not locked and opened application
    * is free to introduce other events as development unfolds.
@@ -37,8 +57,10 @@ export class ApplicationOptions implements IApplicationOptions {
   readonly envUrl: string = DEFAULT.ENV_URL;
   readonly containerEl: HTMLElement | null = null;
   readonly isShownInModal: boolean | undefined = undefined;
-  readonly videoId: string | null = null;
-  readonly on: IApplicationCallbacks = { loaded: DEFAULT.CALLBACK_LOADED };
+  readonly on: IApplicationCallbacks = {
+    loaded: DEFAULT.CALLBACK_STUB,
+    ready: DEFAULT.CALLBACK_STUB,
+  };
 
   constructor(options: IApplicationOptions) {
     for (const prop in options) {
@@ -51,25 +73,20 @@ export class ApplicationOptions implements IApplicationOptions {
       this.containerEl = null;
     }
 
-    /**
-     * if `isShownInModal` was not specified - it's value derived from existence of `containerEl`
-     * in such a way that if `containerEl` is not an element then we assume iframe is opened
-     * as a modal, and if `containerEl` is defined then iframe is embedded inline
-     */
     if (!hasBoolean(this.isShownInModal)) {
       this.isShownInModal = !this.containerEl;
     }
 
-    if (!hasString(this.videoId)) {
-      this.videoId = null;
-    }
-
     this.on = hasObject(this.on)
       ? this.on
-      : { loaded: DEFAULT.CALLBACK_LOADED };
+      : { loaded: DEFAULT.CALLBACK_STUB, ready: DEFAULT.CALLBACK_STUB };
 
     if (typeof this.on?.loaded !== 'function') {
-      this.on.loaded = DEFAULT.CALLBACK_LOADED;
+      this.on.loaded = DEFAULT.CALLBACK_STUB;
+    }
+
+    if (typeof this.on?.ready !== 'function') {
+      this.on.ready = DEFAULT.CALLBACK_STUB;
     }
   }
 }
