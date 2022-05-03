@@ -24,7 +24,10 @@
     "build:module": "rm -rf dist && tsc -p tsconfig.module.json && vite build --config vite-module.config.ts",
     "build:snippet": "rm -rf dist-snippet && tsc -p tsconfig.snippet.json && vite build --config vite-snippet.config.ts",
     "build:snippet:min": "tsc -p tsconfig.snippet.json && vite build --config vite-snippet-min.config.ts",
-    "build:all": "npm run build:module && npm run build:snippet && npm run build:snippet:min"
+    "build:all": "npm run build:module && npm run build:snippet && npm run build:snippet:min",
+    "serve:snippet": "python3 -m http.server 9090 --directory ./dist-snippet",
+    "preversion": "npm run build:all",
+    "prepare" : "npm run build:module"
   },
   "repository": {
     "type": "git",
