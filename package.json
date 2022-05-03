@@ -1,6 +1,6 @@
 {
   "name": "@wochit/embedded",
-  "version": "0.0.0",
+  "version": "0.0.0-rc.0",
   "private": false,
   "description": "description",
   "files": [
@@ -27,7 +27,7 @@
     "build:all": "npm run build:module && npm run build:snippet && npm run build:snippet:min",
     "serve:snippet": "python3 -m http.server 9090 --directory ./dist-snippet",
     "preversion": "npm run build:all",
-    "prepare" : "npm run build:module"
+    "prepare": "npm run build:module"
   },
   "repository": {
     "type": "git",
