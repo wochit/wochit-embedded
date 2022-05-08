@@ -18,7 +18,7 @@
   },
   "outDir": "dist",
   "include": ["lib"],
-  "exclude": ["node_modules", "dist", "dist-snippet", "lib/snippet.ts"],
+  "exclude": ["node_modules", "dist", "dist-snippet", "lib/snippet"],
   "typeRoots": [
     "./lib",
     "./node_modules/@types/"

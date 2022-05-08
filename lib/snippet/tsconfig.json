@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "target": "ES2021",
+    "target": "ES2022",
     "useDefineForClassFields": true,
     "module": "ESNext",
     "lib": ["ESNext", "DOM"],
@@ -12,13 +12,14 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noImplicitReturns": true,
-    "noEmit": true,
+    "noEmit": true
   },
-  "outDir": "dist",
-  "include": ["lib"],
-  "exclude": ["node_modules", "dist", "dist-snippet"],
+  "outDir": "../../dist",
+  "include": ["."],
+  "exclude": ["../../node_modules",
+    "dist", "dist-snippet"],
   "typeRoots": [
-    "./lib",
+    "./.",
     "./node_modules/@types/"
   ]
 }
