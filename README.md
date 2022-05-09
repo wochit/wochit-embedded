@@ -8,7 +8,7 @@
   # install via yarn
   yarn add @wochit/embedded
   ```
-  ```ecmascript 6
+  ```javascript
   import wt from '@wochit/embedded';
 
   wt.config({ channelId, userToken });
@@ -18,7 +18,7 @@
   });
   ```
   or
-  ```ecmascript 6
+  ```javascript
   import { config, openVideoCreator } from '@wochit/embedded';
   
   config({ channelId, userToken });
