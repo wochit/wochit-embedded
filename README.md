@@ -1,5 +1,7 @@
 # wochit-embedded
 
+<video src='https://www.wochit.com/wp-content/uploads/Wochit-for-Marketplaces-1.mp4' width=180/>
+
 ### Usage
 * Install module via npm
   ```shell
