@@ -7,7 +7,7 @@ https://user-images.githubusercontent.com/3756473/167427983-89c60590-a1f5-4c6c-9
 
 
 ### Usage
-* Install module via npm
+* Install module via [NPM](https://www.npmjs.com/package/@wochit/embedded)
   ```shell
   npm i @wochit/embedded
   ```
