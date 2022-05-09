@@ -1,13 +1,15 @@
 # wochit-embedded
 
 ### Usage
-* NPM module
+* Install module via npm
   ```shell
-  # install via npm
   npm i @wochit/embedded
-  # install via yarn
+  ```
+  Install via yarn
+  ```shell
   yarn add @wochit/embedded
   ```
+  somewhere in your app
   ```javascript
   import wt from '@wochit/embedded';
 
