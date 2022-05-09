@@ -12,7 +12,7 @@ export default defineConfig({
     minify: false,
     sourcemap: false,
     lib: {
-      entry: resolve(__dirname, 'lib/snippet.ts'),
+      entry: resolve(__dirname, 'lib/snippet/index.ts'),
       name: '__unused__',
       formats: ['iife'],
       fileName: (format) => `wochit-snippet.${format}.js`,

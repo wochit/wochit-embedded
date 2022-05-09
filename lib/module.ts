@@ -6,6 +6,7 @@ import {
 import { WochitEmbeddedApp } from './model/WochitEmbeddedApp';
 import { hasObject, hasString, logError } from './api/toolkit';
 
+declare const __APP_VERSION__: string;
 let common: CommonOptions;
 let shortcut: ApplicationOptions;
 const app = new WochitEmbeddedApp();
@@ -30,6 +31,8 @@ export function config(options: ICommonOptions) {
 
   common = new CommonOptions(options);
   app.verbose = common.verbose;
+
+  app.log(`version ${__APP_VERSION__}`);
   app.log('config', common);
 }
 
