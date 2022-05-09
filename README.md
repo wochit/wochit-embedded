@@ -1,6 +1,6 @@
 # wochit-embedded
 
-<video src='https://www.wochit.com/wp-content/uploads/Wochit-for-Marketplaces-1.mp4' width=180/>
+<video src='https://www.wochit.com/wp-content/uploads/Wochit-for-Marketplaces-1.mp4' width=180></video>
 
 ### Usage
 * Install module via npm
