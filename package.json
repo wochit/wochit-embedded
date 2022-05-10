@@ -18,14 +18,13 @@
   },
   "types": "./dist/module.d.ts",
   "scripts": {
-    "dev:module": "tsc && vite build --config vite-module.config.ts --watch",
-    "dev:snippet": "tsc && vite build --config vite-snippet.config.ts --watch",
     "test": "echo \"test\" && exit 0",
-    "build:module": "rm -rf dist && tsc -p tsconfig.module.json && vite build --config vite-module.config.ts",
+    "build:module": "rm -rf dist && tsc -p tsconfig.json && vite build --config vite-module.config.ts",
     "build:snippet": "rm -rf dist-snippet && tsc -p lib/snippet/tsconfig.json && vite build --config vite-snippet.config.ts",
     "build:snippet:min": "tsc -p lib/snippet/tsconfig.json && vite build --config vite-snippet-min.config.ts",
     "build:all": "npm run build:module && npm run build:snippet && npm run build:snippet:min",
     "serve:snippet": "python3 -m http.server 9090 --directory ./dist-snippet",
+    "print:snippet-sri": "node ./scripts/sri.js",
     "preversion": "npm run build:all",
     "prepare": "npm run build:module"
   },
@@ -33,6 +32,7 @@
     "type": "git",
     "url": "git+https://github.com/wochit/wochit-embedded.git"
   },
+  "type": "module",
   "keywords": [
     "wochit",
     "wochit-inside",
