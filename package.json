@@ -26,8 +26,8 @@
     "print:snippet-sri": "node ./scripts/sri.js",
     "preversion": "npm run build:all",
     "prepare": "npm run build:module",
-    "docs:dev": "vuepress dev docs",
-    "docs:build": "vuepress build docs"
+    "serve:docs": "vuepress dev docs",
+    "build:docs": "vuepress build docs"
   },
   "repository": {
     "type": "git",

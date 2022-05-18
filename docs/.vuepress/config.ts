@@ -1,5 +1,9 @@
 export default {
+  base: '/wochit-embedded/',
+  themeConfig: {
+    sidebar: "auto",
+  },
   lang: 'en-US',
-  title: 'Hello, VuePress2!',
+  title: "Wochit Documentation",
   description: 'This is my first VuePress site',
 };
