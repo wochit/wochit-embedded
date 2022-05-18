@@ -3,9 +3,9 @@ import { DEFAULT } from './const';
 
 export interface ICommonOptions {
   /**
-   * Integration channel id
+   * Integration client id
    */
-  readonly channelId: string;
+  readonly clientId: string;
   /**
    * User authentication token
    */
@@ -21,13 +21,14 @@ export interface ICommonOptions {
   readonly verbose?: boolean;
   /**
    * For other props - see the online documentation
+   * @link https://wochit.github.io/wochit-embedded/
    */
   [key: string]: unknown;
 }
 
 export class CommonOptions implements ICommonOptions {
   [key: string]: unknown;
-  readonly channelId: string = '';
+  readonly clientId: string = '';
   readonly userToken: string | null = null;
   readonly skipLogin: boolean = DEFAULT.SKIP_LOGIN;
   readonly verbose: boolean = DEFAULT.VERBOSE;

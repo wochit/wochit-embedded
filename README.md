@@ -19,7 +19,7 @@ https://user-images.githubusercontent.com/3756473/167427983-89c60590-a1f5-4c6c-9
   ```javascript
   import wt from '@wochit/embedded';
 
-  wt.config({ channelId, userToken });
+  wt.config({ clientId, userToken });
   
   document.querySelector('.video-creator-btn').addEventListener('click', () => {
     wt.openVideoCreator({});
@@ -29,7 +29,7 @@ https://user-images.githubusercontent.com/3756473/167427983-89c60590-a1f5-4c6c-9
   ```javascript
   import { config, openVideoCreator } from '@wochit/embedded';
   
-  config({ channelId, userToken });
+  config({ clientId, userToken });
   
   document.querySelector('.video-creator-btn').addEventListener('click', () => {
     openVideoCreator({});
@@ -55,7 +55,7 @@ https://user-images.githubusercontent.com/3756473/167427983-89c60590-a1f5-4c6c-9
   ```
   somewhere in your app
   ```javascript
-  window.wt('config', { channelId, userToken });
+  window.wt('config', { clientId, userToken });
   document.querySelector('.video-creator-btn').addEventListener('click', () => {
     window.wt('openVideoCreator', {});
   });
@@ -65,7 +65,7 @@ https://user-images.githubusercontent.com/3756473/167427983-89c60590-a1f5-4c6c-9
   ```xhtml
   <script src="https://cdn.wochit.com/wochit-embedded/latest.min.js" type="application/javascript"></script>
   <script type="application/javascript">
-    window.wt('config', { channelId, userToken });
+    window.wt('config', { clientId, userToken });
     document.querySelector('.video-creator-btn').addEventListener('click', () => {
       window.wt('openVideoCreator', {});
     });

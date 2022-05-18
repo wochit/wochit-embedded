@@ -13,7 +13,7 @@ const app = new WochitEmbeddedApp();
 
 /**
  * One time integration configuration.
- * Call it where you have easy access to `channelId` and `userToken`.
+ * Call it where you have easy access to `clientId` and `userToken`.
  * If called multiple times, only last time options are in effect.
  * @param options {ICommonOptions}
  */
@@ -21,8 +21,8 @@ export function config(options: ICommonOptions) {
   if (!hasObject(options)) {
     logError('calling config() without options');
     return;
-  } else if (!hasString(options.channelId)) {
-    logError('calling config() without channelId');
+  } else if (!hasString(options.clientId)) {
+    logError('calling config() without clientId');
     return;
   } else if (!hasString(options.userToken) && options.skipLogin !== true) {
     logError('calling config() without userToken');

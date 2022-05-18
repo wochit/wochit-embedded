@@ -172,6 +172,7 @@ export class WochitEmbeddedApp {
           'envUrl',
           'verbose',
           'skipLogin',
+          'clientId',
           'userToken',
         ].includes(k)
           ? undefined
@@ -191,6 +192,7 @@ export class WochitEmbeddedApp {
       {
         cmd: OUTGOING_MESSAGE.SHORTCUT_OPTIONS,
         iframeVersion: __APP_VERSION__,
+        channelId: common.clientId,
         JWT: common.userToken,
         ...this.#preparePayloadForIframeWindow(common, shortcut),
       },
@@ -211,6 +213,7 @@ export class WochitEmbeddedApp {
       {
         cmd: OUTGOING_MESSAGE.STUDIO_OPTIONS,
         iframeVersion: __APP_VERSION__,
+        channelId: common.clientId,
         JWT: common.userToken,
         isReEditing: !!shortcut.videoId,
         ...this.#preparePayloadForIframeWindow(common, shortcut),
