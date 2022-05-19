@@ -1,6 +1,6 @@
 # Getting Started
 
-## Basic Usage
+## Basic Usage - Hello
 * Install module via [NPM](https://www.npmjs.com/package/@wochit/embedded)
 
 <code-group>
