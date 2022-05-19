@@ -25,7 +25,7 @@ export interface IApplicationOptions {
   readonly on?: IApplicationCallbacks;
   /**
    * For other props - see the online documentation
-   * @link https://wochit.github.io/wochit-embedded/
+   * @link https://docs.wochit.com/
    */
   [key: string]: unknown;
 }
