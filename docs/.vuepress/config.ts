@@ -1,5 +1,5 @@
 export default {
-  base: '/wochit-embedded/',
+  // base: '/wochit-embedded/',
   themeConfig: {
     displayAllHeaders: false, // Default: false
     sidebar: [
