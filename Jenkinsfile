@@ -51,8 +51,8 @@ spec:
   }
   parameters
   {
-    choice(choices: ['True', 'False'], name: 'publishToS3', description: '')
-    choice(choices: ['True', 'False'], name: 'publishToNpm', description: '')
+    booleanParam(name: 'publishToS3', defaultValue: false, description: '')
+    booleanParam(name: 'publishToNpm', defaultValue: false, description: '')
   }
   stages
   {
