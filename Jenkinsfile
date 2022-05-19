@@ -59,10 +59,10 @@ spec:
     secret:
       secretName: aws-account-config
       defaultMode: 511
-    - name: ssh-key-volume
-      secret:
-        secretName: devops-ssh-key
-        defaultMode: 256
+  - name: ssh-key-volume
+    secret:
+      secretName: devops-ssh-key
+      defaultMode: 256
 """
     }
   }
