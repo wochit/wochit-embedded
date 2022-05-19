@@ -4,7 +4,7 @@ export default {
     displayAllHeaders: false, // Default: false
     sidebar: [
       '/',
-      ['/pageTwo', 'Explicit link text']
+      ['/pageTwo', 'Page Two']
     ],
     // Assumes GitHub. Can also be a full GitLab url.
     repo: 'wochit/wochit-embedded',
