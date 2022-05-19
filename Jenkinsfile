@@ -87,7 +87,7 @@ spec:
       {
         script
         {
-          if(!params.publishDocs)
+          if(!params.publishDocs || params.publishToS3 || params.publishDocs)
           {
             sh "npm run build:all"
           }
