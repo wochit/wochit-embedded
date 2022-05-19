@@ -98,8 +98,9 @@ spec:
             cd docs/.vuepress/dist
             echo 'docs.wochit.com' > CNAME
 
-            git config user.name wochit-devops
-            git config user.email devops@wochit.com
+            git config --global user.name "wochit-devops"
+            git config --global user.email "devops@wochit.com"
+
             git init
             git add -A
             git commit -m 'deploy'
