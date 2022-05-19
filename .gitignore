@@ -34,3 +34,8 @@ typings/
 dist/
 dist-snippet/
 /lib/**/*.js
+
+# Vuepress build artifacts
+docs/.vuepress/dist
+.temp
+.cache
