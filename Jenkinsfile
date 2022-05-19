@@ -6,6 +6,11 @@ def repoName = "${env.BRANCH_NAME}-wochit-embedded"
 def env = ((env.BRANCH_NAME == 'master') || (env.BRANCH_NAME == 'stage') ? "production" : "development");
 
 pipeline {
+  options
+  {
+    disableConcurrentBuilds()
+    buildDiscarder(logRotator(numToKeepStr: '10', artifactNumToKeepStr: '3'))
+  }
   agent {
     kubernetes {
       label "jenkins-slave-${repoName}"
@@ -34,10 +39,18 @@ spec:
         mountPath: /root/.aws/config
         subPath: config
   - name: node
-    image: node:16.14-stretch
+    image: 10.100.200.251:5000/node-chrome:latest
     command:
-    - cat
+      - /bin/sh
+      - -ec
+      - |
+        ssh-keyscan github.com >> ~/.ssh/known_hosts
+        cat
     tty: true
+    volumeMounts:
+      - name: ssh-key-volume
+        mountPath: "/root/.ssh/id_rsa"
+        subPath: id_rsa
   volumes:
   - name: aws-account-credentials
     secret:
@@ -46,6 +59,10 @@ spec:
     secret:
       secretName: aws-account-config
       defaultMode: 511
+    - name: ssh-key-volume
+      secret:
+        secretName: devops-ssh-key
+        defaultMode: 256
 """
     }
   }
@@ -53,6 +70,7 @@ spec:
   {
     booleanParam(name: 'publishToS3', defaultValue: false, description: '')
     booleanParam(name: 'publishToNpm', defaultValue: false, description: '')
+    booleanParam(name: 'publishDocs', defaultValue: false, description: '')
   }
   stages
   {
@@ -60,10 +78,36 @@ spec:
     {
       steps
       {
-        sh "npm ci && npm run build:all"
+        sh "npm ci"
       }
     }
-    stage('Push') { steps { sh "docker push ${docker_image_name}" } }
+    stage('Publish')
+    {
+      steps
+      {
+        script
+        {
+          if(params.publishToS3 || params.publishToNpm)
+          {
+            sh "npm run build:all"
+          }
+          if(params.publishDocs)
+          {
+            sh """
+            npm run build:docs
+            cd docs/.vuepress/dist
+            echo 'docs.wochit.com' > CNAME
+
+            git init
+            git add -A
+            git commit -m 'deploy'
+
+            git push -f git@github.com:wochit/wochit-embedded.git master:documentation
+            """
+          }
+        }
+      }
+    }
   }
   post { always { script { general_notification.sendSlack() } } }
 }
