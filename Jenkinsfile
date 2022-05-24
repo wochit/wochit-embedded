@@ -47,6 +47,9 @@ spec:
         ssh-keyscan github.com >> ~/.ssh/known_hosts
         cat
     tty: true
+    envFrom:
+      - secretRef:
+          name: npm-repo
     volumeMounts:
       - name: ssh-key-volume
         mountPath: "/root/.ssh/id_rsa"
