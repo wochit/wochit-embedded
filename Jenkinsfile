@@ -78,7 +78,7 @@ spec:
     {
       steps
       {
-        sh "npm ci"
+        sh "mkdir node_modules && npm ci --no-audit"
         script
         {
           if(!params.publishDocs || params.publishToS3 || params.publishToNpm)
