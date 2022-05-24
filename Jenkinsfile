@@ -126,6 +126,7 @@ spec:
       {
         script
         {
+          echo "TBD"
         }
       }
     }
