@@ -79,36 +79,53 @@ spec:
       steps
       {
         sh "npm ci"
+        if(!params.publishDocs || params.publishToS3 || params.publishToNpm)
+        {
+          sh "npm run build:all"
+        }
       }
     }
-    stage('Publish')
+    stage('NPM')
+    {
+      when { expression { params.publishToNpm } }
+      steps
+      {
+        script
+        {
+          sh "npm publish"
+        }
+      }
+    }
+    stage('Docs')
+    {
+      when { expression { params.publishDocs } }
+      steps
+      {
+        script
+        {
+          sh """
+          npm run build:docs
+          cd docs/.vuepress/dist
+          echo 'docs.wochit.com' > CNAME
+
+          git config --global user.name "wochit-devops"
+          git config --global user.email "devops@wochit.com"
+
+          git init
+          git add -A
+          git commit -m 'deploy'
+
+          git push -f git@github.com:wochit/wochit-embedded.git master:documentation
+          """
+        }
+      }
+    }
+    stage('CDN')
     {
       steps
       {
         script
         {
-          if(!params.publishDocs || params.publishToS3 || params.publishToNpm)
-          {
-            sh "npm run build:all"
-            sh "npm publish"
-          }
-          if(params.publishDocs)
-          {
-            sh """
-            npm run build:docs
-            cd docs/.vuepress/dist
-            echo 'docs.wochit.com' > CNAME
-
-            git config --global user.name "wochit-devops"
-            git config --global user.email "devops@wochit.com"
-
-            git init
-            git add -A
-            git commit -m 'deploy'
-
-            git push -f git@github.com:wochit/wochit-embedded.git master:documentation
-            """
-          }
         }
       }
     }
