@@ -79,9 +79,12 @@ spec:
       steps
       {
         sh "npm ci"
-        if(!params.publishDocs || params.publishToS3 || params.publishToNpm)
+        script
         {
-          sh "npm run build:all"
+          if(!params.publishDocs || params.publishToS3 || params.publishToNpm)
+          {
+            sh "npm run build:all"
+          }
         }
       }
     }
