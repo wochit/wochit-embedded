@@ -1,7 +1,11 @@
-# wochit-embedded
+# @wochit/embedded NPM module
 
 
+* [Documentation](https://docs.wochit.com)
+* [Usage](#usage)
 
+
+### Intro
 https://user-images.githubusercontent.com/3756473/167427983-89c60590-a1f5-4c6c-9e95-bb54facdfddd.mp4
 
 
