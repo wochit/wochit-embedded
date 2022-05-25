@@ -33,7 +33,11 @@ export function hasObject(value: unknown): value is object {
 }
 
 export function logError(msg: string) {
-  console?.error(LOGGER_PREFIX, msg);
+  if (typeof window.reportError === 'function') {
+    window.reportError(new Error(`${LOGGER_PREFIX} ${msg}`));
+  } else {
+    console?.error(LOGGER_PREFIX, msg);
+  }
 }
 
 export function uuid(): string {

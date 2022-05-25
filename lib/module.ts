@@ -19,13 +19,17 @@ const app = new WochitEmbeddedApp();
  */
 export function config(options: ICommonOptions) {
   if (!hasObject(options)) {
-    logError('calling config() without options');
+    logError('config() missing required argument');
     return;
   } else if (!hasString(options.clientId)) {
-    logError('calling config() without clientId');
+    logError(
+      `config() expected type of 'clientId' is string, got ${options.clientId}`
+    );
     return;
   } else if (!hasString(options.userToken) && options.skipLogin !== true) {
-    logError('calling config() without userToken');
+    logError(
+      `config() expected type of 'userToken' is string, got ${options.userToken}`
+    );
     return;
   }
 
