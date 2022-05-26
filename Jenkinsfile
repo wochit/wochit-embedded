@@ -1,9 +1,11 @@
 @Library(value='ci-cd', changelog=false) _
 
+import groovy.json.JsonSlurper
+
 def general_notification = new org.general.notification()
 def repoName = "${env.BRANCH_NAME}-wochit-embedded"
 
-def env = ((env.BRANCH_NAME == 'master') || (env.BRANCH_NAME == 'stage') ? "production" : "development");
+def envProfile = ((env.BRANCH_NAME == 'master') || (env.BRANCH_NAME == 'develop') ? "prod" : "test");
 
 pipeline {
   options
@@ -126,13 +128,35 @@ spec:
         }
       }
     }
-    stage('CDN')
+    stage('S3-CDN')
     {
       steps
       {
-        script
+        container('kubectl-aws-iam-authenticator')
         {
-          echo "TBD"
+          script
+          {
+            sh 'pip install boto requests logging s3cmd'
+
+            sh """
+            cp ~/.aws/credentials \$HOME/.s3cfg
+            sed -i "s/aws_access_key_id/access_key/g" \$HOME/.s3cfg
+            sed -i "s/aws_secret_access_key/secret_key/g" \$HOME/.s3cfg
+            """
+
+            def packageJsonText = readFile(file: 'package.json')
+
+            def jsonObj = new JsonSlurper().parseText(packageJsonText)
+            def version = jsonObj['version']
+            
+            sh 's3cmd put dist-snippet/${version}.js s3://wochit-embedded-${envProfile}/${version}.js'
+            sh 's3cmd put dist-snippet/${version}.min.js s3://wochit-embedded-${envProfile}/${version}.min.js'
+            sh 's3cmd put dist-snippet/${version}.min.js.map s3://wochit-embedded-${envProfile}/${version}.min.js.map'
+
+            sh 's3cmd put dist-snippet/latest.js s3://wochit-embedded-${envProfile}/latest.js'
+            sh 's3cmd put dist-snippet/latest.min.js s3://wochit-embedded-${envProfile}/latest.min.js'
+            sh 's3cmd put dist-snippet/latest.min.js.map s3://wochit-embedded-${envProfile}/latest.min.js.map'
+          }
         }
       }
     }
