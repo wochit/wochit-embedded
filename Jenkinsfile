@@ -5,7 +5,7 @@ import groovy.json.JsonSlurper
 def general_notification = new org.general.notification()
 def repoName = "${env.BRANCH_NAME}-wochit-embedded"
 
-def envProfile = ((env.BRANCH_NAME == 'master') || (env.BRANCH_NAME == 'develop') ? "prod" : "test");
+def envProfile = ((env.BRANCH_NAME == 'master') || (env.BRANCH_NAME == 'stage') ? "prod" : "test");
 
 pipeline {
   options
