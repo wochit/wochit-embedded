@@ -1,7 +1,5 @@
 @Library(value='ci-cd', changelog=false) _
 
-import groovy.json.JsonSlurperClassic
-
 def general_notification = new org.general.notification()
 def repoName = "${env.BRANCH_NAME}-wochit-embedded"
 
@@ -144,8 +142,8 @@ spec:
             sed -i "s/aws_secret_access_key/secret_key/g" \$HOME/.s3cfg
             """
 
-            def jsonObj = new groovy.json.JsonSlurperClassic().parseText(readFile("package.json"))
-            def version = jsonObj["version"]
+            def jsonObj = readJSON file: 'package.json'
+            def version = jsonObj['version']
             
             sh "s3cmd put dist-snippet/${version}.js s3://wochit-embedded-${envProfile}/${version}.js"
             sh "s3cmd put dist-snippet/${version}.min.js s3://wochit-embedded-${envProfile}/${version}.min.js"
