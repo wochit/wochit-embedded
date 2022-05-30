@@ -8,18 +8,16 @@ function cloneAsLatest(): PluginOption {
     name: 'clone-as-latest',
     closeBundle() {
       try {
-        copyFileSync(
-          `./dist-snippet/${version}.js`,
-          './dist-snippet/latest.js'
-        );
-        copyFileSync(
-          `./dist-snippet/${version}.min.js`,
-          './dist-snippet/latest.min.js'
-        );
-        copyFileSync(
-          `./dist-snippet/${version}.min.js.map`,
-          './dist-snippet/latest.min.js.map'
-        );
+        for (const f of [
+          `${version}.js`,
+          `${version}.min.js`,
+          `${version}.min.js.map`,
+        ]) {
+          const latest = f
+            .replace(/^(\d\.\d\.\d)/, 'latest')
+            .replace(/-\w*\.\d+/, '-rc');
+          copyFileSync(`./dist-snippet/${f}`, `./dist-snippet/${latest}`);
+        }
         console.log('\n✓ iife snippet cloned as latest');
       } catch (err: any) {
         console.error(`\n❗️iife snippet wasn't cloned as latest`, err);
