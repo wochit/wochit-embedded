@@ -14,7 +14,7 @@ function cloneAsLatest(): PluginOption {
           `${version}.min.js.map`,
         ]) {
           const latest = f
-            .replace(/^(\d\.\d\.\d)/, 'latest')
+            .replace(/^(\d+\.\d+\.\d+)/, 'latest')
             .replace(/-\w*\.\d+/, '-rc');
           copyFileSync(`./dist-snippet/${f}`, `./dist-snippet/${latest}`);
         }
