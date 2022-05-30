@@ -1,10 +1,12 @@
 export default {
   // base: '/wochit-embedded/',
   themeConfig: {
-    displayAllHeaders: false, // Default: false
+    displayAllHeaders: true, // Default: false
     sidebar: [
       '/',
-      ['/pageTwo', 'Page Two']
+      ['/authentication', 'User Authentication'],
+      ['/embed', 'Embed Your Video Creator'],
+      ['/webhook', 'Listen to A Webhook'],
     ],
     // Assumes GitHub. Can also be a full GitLab url.
     repo: 'wochit/wochit-embedded',
