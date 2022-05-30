@@ -143,13 +143,7 @@ spec:
             def jsonObj = readJSON file: 'package.json'
             def version = jsonObj['version']
             
-            sh "s3cmd put dist-snippet/${version}.js s3://wochit-embedded/${version}.js"
-            sh "s3cmd put dist-snippet/${version}.min.js s3://wochit-embedded/${version}.min.js"
-            sh "s3cmd put dist-snippet/${version}.min.js.map s3://wochit-embedded/${version}.min.js.map"
-
-            sh "s3cmd put dist-snippet/latest.js s3://wochit-embedded/latest.js"
-            sh "s3cmd put dist-snippet/latest.min.js s3://wochit-embedded/latest.min.js"
-            sh "s3cmd put dist-snippet/latest.min.js.map s3://wochit-embedded/latest.min.js.map"
+            sh "s3cmd put dist-snippet/* s3://wochit-embedded/"
 
             sh "aws cloudfront create-invalidation --distribution-id E1TGV7X7NG6XBN --paths '/*'"
           }
