@@ -69,9 +69,9 @@ spec:
   }
   parameters
   {
-    booleanParam(name: 'publishToS3', defaultValue: false, description: '')
-    booleanParam(name: 'publishToNpm', defaultValue: false, description: '')
-    booleanParam(name: 'publishDocs', defaultValue: false, description: '')
+    booleanParam(name: 'publishToNpm', defaultValue: false, description: 'Publish NPM module')
+    booleanParam(name: 'publishDocs', defaultValue: false, description: 'Publish Documentation')
+    booleanParam(name: 'publishToS3', defaultValue: false, description: 'Publish S3-CDN IIFE snippet')
   }
   stages
   {
@@ -126,6 +126,7 @@ spec:
     }
     stage('S3-CDN')
     {
+      when { expression { params.publishToS3 } }
       steps
       {
         container('kubectl-aws-iam-authenticator')
@@ -142,7 +143,7 @@ spec:
 
             def jsonObj = readJSON file: 'package.json'
             def version = jsonObj['version']
-            
+
             sh "s3cmd put dist-snippet/* s3://wochit-embedded/"
 
             sh "aws cloudfront create-invalidation --distribution-id E1TGV7X7NG6XBN --paths '/*'"
