@@ -154,7 +154,7 @@ document.querySelector('.video-creator-btn').addEventListener('click', () => {
 
 </code-group>
 
-This javascript should be launched from your site. Click here to see how to customize your video creator. 
+This javascript should be launched from your site. See how you can [customize your video creator!](/embed.html#open-the-video-creator)
 
 
 
