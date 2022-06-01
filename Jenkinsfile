@@ -79,9 +79,15 @@ spec:
     {
       steps
       {
-        sh "mkdir node_modules && npm ci --no-audit"
         script
         {
+          sh """
+          npm config set unsafe-perm true
+          mkdir node_modules
+          chown node:node node_modules
+          npm ci --no-audit
+          """
+
           if(!params.publishDocs || params.publishToS3 || params.publishToNpm)
           {
             sh "npm run build:all"
