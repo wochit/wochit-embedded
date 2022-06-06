@@ -1,9 +1,9 @@
 # User Authentication
 
 Call Wochit REST API to get a *user-token* which will be used to open the Video Creator.  
-A *user-token* is requiered to intialize the Video Creator. It will allow us to identify you and your user.
+A *user-token* is required to initialize the Video Creator. It will allow us to identify you and your user.
 
-Use your API keys to authenticate requests. You can view your API keys in the Settings Dashboard
+Use your API keys to authenticate requests. You can view your API keys in the [Settings Dashboard](https://admin.wochit.com/settings).
 
 
 
@@ -159,9 +159,12 @@ System.out.println(response.body());
 </code-group>
 
 Authenticate via bearer authentication sending the followings:  
-Header: *client-id* and *client-secret* - these are your API keys.     
-Data: *User* object that contains information about the user. Note: user.id is a unique identifier of your user and is a
-required parameter. Email, firstName and lastName are optional.
+**Header**: *client-id* and *client-secret* - these are your API keys.   
+Your API keys carry many privileges, so be sure to keep them secure! Do not share your secret API keys in publicly accessible areas such as GitHub, client-side code, and so forth.     
+   
+**Data**: *User* object that contains information about the user.   
+Note: **user.id** is a unique identifier of your user and **is a
+required parameter**. Email, firstName and lastName are optional.
 
 
 
@@ -181,7 +184,8 @@ required parameter. Email, firstName and lastName are optional.
 
 </code-group>
 
-The token value is the userToken. Use userToken to open the Wochit video creator! [link to next phase]
+The token value is the userToken. Use userToken to [open the Wochit video creator!](/embed.html#set-configuration) 
+The token expiration time is one week. 
 
 ### Errors
 
@@ -213,14 +217,12 @@ We use conventional HTTP response codes to indicate the success or failure of an
 <code-block title="500 - Internal Server Error (Rare)" >
 ```json
 {
-"token":
-  {
-    "value": <token-value>,
-    "expirationDate": <token-expiration-date>
-  }
+  "code": 500,
+  "message": "Something Wrong Happened: TraceId: 83a9b0a64b6d3ce2f86d297b8ce560b0",
+  "details": null
 }
 ```
 </code-block>
 </code-group>
 
-Contact us if you need any technical assistance.
+Need any technical assistance? Click on the bubble at the bottom right side of the screen to chat with us! 

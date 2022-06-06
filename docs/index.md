@@ -5,9 +5,10 @@ Give your platform users the power to create professional videos through our int
 
 [Generate a token](/authentication.html#user-authentication) for every user and use the token to [open the video creator](/embed.html#embed-wochit-video-creator) in your web application. Once the video is ready, we will send you a notification using [webhooks](webhook.html#webhook).
 
-Haven't found what you are looking for? [Contact us!](https://admin.wochit.com/contact-us)  
+Haven't found what you are looking for? [Contact us!](https://admin.wochit.com/contact-us)   
 
-Get your video editor up and running in just 3 steps!
+   
+**Get your video editor up and running in just 3 steps!**
 
 ## Step 1: Get User Token
 Call Wochit REST API to get a *user-token* which will be used to open the Video Creator. 
@@ -43,7 +44,7 @@ curl https://studio-api.wochit.com/api/v1/authentication/insideUserTokens \
 </code-group>
 
 
-Use the token to open the Wochit video creator in the next step.
+Use the token value to open the Wochit video creator in the next step. The token expiration time is one week. 
 
 More on Authentication [here!](/authentication.html#user-authentication)
 
