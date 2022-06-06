@@ -1,8 +1,8 @@
-# webhook
+# Webhook
 
 
 We use webhooks to let your application know when the video has been produced asynchronously, outside of a video creator instance.  
-Set up your webhook endpoint here! 
+Set up your webhook endpoint [here!](https://admin.wochit.com/settings) 
 
 We'll make a POST request to the address you give us and you can do whatever you need with it on your end.
 You can expect the following JSON structure:
@@ -20,13 +20,13 @@ You can expect the following JSON structure:
 ### Attributes:
 ***
 **videoContext** <code>string</code>   
-String initiated when calling openVideoCreator() [ link to the videoContext property of the function above]  
+String initiated when calling openVideoCreator(). [videoContext](/embed.html#you-can-customize-the-video-creator-by-using-the-following-properties) connects the video to the video creator instance, so you can know where the video belongs to. 
 ***
 **wochitVideoId** <code>string</code>  
-Wochit unique identifier for this video. You can use it to re-edit the video. Learn more here [link to the videoId property of the function above]  
+Wochit unique identifier for this video. You can use it to [re-edit the video](/embed.html#you-can-customize-the-video-creator-by-using-the-following-properties). 
 ***
 **thumbnailUrl** <code>string</code>  
-Direct link to the thumbnail of the video  
+Direct link to the thumbnail of the video.  
 ***
 **videoUrl** <code>string</code>  
 Direct link to the video. Links have an expiration time of X minutes so you should download it to your system and use your own CDN.  
@@ -41,6 +41,8 @@ The title of the video.
 * 18.204.107.61
 * 100.25.120.71
 :::
+
+Need any technical assistance? Click on the bubble at the bottom right side of the screen to chat with us!
 
 
 
