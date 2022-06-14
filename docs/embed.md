@@ -40,7 +40,7 @@ yarn add @wochit/embedded
     a.async = 1;
     a.src = url;
     m.parentNode.insertBefore(a, m);
-  })(window, document, 'script', 'https://cdn.wochit.com/wochit-embedded/latest.min.js', ‘wochit’);
+  })(window, document, 'script', 'https://embedded.wochit.com/latest.min.js', ‘wochit’);
 </script>
 ```
 </code-block>
