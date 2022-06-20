@@ -1,9 +1,11 @@
 # User Authentication
 
+A user token is a unique access token that is used to authenticate the user. It will allow us to identify the user.
+
 Call Wochit REST API to get a *user-token* which will be used to open the Video Creator.  
 A *user-token* is required to initialize the Video Creator. It will allow us to identify you and your user.
 
-Use your API keys to authenticate requests. You can view your API keys in the [Settings Dashboard](https://admin.wochit.com/settings).
+Use your API keys to authenticate requests. You can view your *Client ID* and *Secret Key* in the [Developers Settings](https://admin.wochit.com/developers).
 
 
 
@@ -13,7 +15,7 @@ Use your API keys to authenticate requests. You can view your API keys in the [S
 
 ```bash
 curl https://studio-api.wochit.com/api/v1/authentication/insideUserTokens \
-  -H "Authorization: Bearer <client_secret>" -H "client-id: <client_id>" \
+  -H "Authorization: Bearer <secret_key>" -H "client-id: <client_id>" \
   -H "Content-Type: application/json" \
   -d {
   "user": {
@@ -48,7 +50,7 @@ const options = {
   method: 'POST',
   headers: {
     'channel-id': '<client_id>',
-    'Authorization': 'Bearer <client_secret>',
+    'Authorization': 'Bearer <secret_key>',
     'Content-Type': 'application/json',
     'Content-Length': data.length,
   },
@@ -88,7 +90,7 @@ fetch('https://studio-api.wochit.com/api/v1/authentication/insideUserTokens', {
   method: 'POST',
   headers: {
     'channel-id': '<client_id>',
-    authorization: 'Bearer <client_secret>',
+    authorization: 'Bearer <secret_key>',
     'content-type': 'application/json',
   },
   credentials: 'omit',
@@ -117,10 +119,10 @@ import requests
 import json
 
 client_id = "my-client-id"
-client_secret = "my-client-secret"
+secret_key = "my-client-secret"
 headers = {
     "client-id": str(client_id),
-    "Authorization": "Bearer " + client_secret,
+    "Authorization": "Bearer " + secret_key,
     "Content-Type": "application/json"
 }
 
@@ -145,7 +147,7 @@ HttpRequest request = HttpRequest.newBuilder()
         .uri(URI.create("https://studio-api.wochit.com/api/v1/authentication/insideUserTokens"))
         .POST(HttpRequest.BodyPublishers.ofString(requestBody))
         .header("Content-Type", "application/json")
-        .header("Authorization", "Bearer <client_sercet>")
+        .header("Authorization", "Bearer <secret_key>")
         .header("channel-id", "<client_id>")
         .build();
 
@@ -159,12 +161,12 @@ System.out.println(response.body());
 </code-group>
 
 Authenticate via bearer authentication sending the followings:  
-**Header**: *client-id* and *client-secret* - these are your API keys.   
+**Header**: *Client ID* and *Secret Key* - these are your API keys.   
 Your API keys carry many privileges, so be sure to keep them secure! Do not share your secret API keys in publicly accessible areas such as GitHub, client-side code, and so forth.     
    
 **Data**: *User* object that contains information about the user.   
 Note: **user.id** is a unique identifier of your user and **is a
-required parameter**. Email, firstName and lastName are optional.
+required parameter**. Email, firstName and lastName are optional for statistics and usage reports.
 
 
 
@@ -184,8 +186,8 @@ required parameter**. Email, firstName and lastName are optional.
 
 </code-group>
 
-The token value is the userToken. Use userToken to [open the Wochit video creator!](/embed.html#set-configuration) 
-The token expiration time is one week. 
+The token value is the *userToken*. Use *userToken* to [open the Wochit video creator!](/embed.html#set-configuration) 
+The token expiration time is 24 hours. 
 
 ### Errors
 

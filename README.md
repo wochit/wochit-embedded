@@ -2,7 +2,8 @@
 
 
 * [Documentation](https://docs.wochit.com)
-* [Usage](#usage)
+* [Using NPM module](#using-npm-module)
+* [Using script from CDN](#using-script-from-cdn) 
 
 
 ### Intro
@@ -10,37 +11,43 @@ https://user-images.githubusercontent.com/3756473/167427983-89c60590-a1f5-4c6c-9
 
 
 
-### Usage
-* Install module via [NPM](https://www.npmjs.com/package/@wochit/embedded)
-  ```shell
-  npm i @wochit/embedded
-  ```
-  Install via yarn
-  ```shell
-  yarn add @wochit/embedded
-  ```
-  somewhere in your app
-  ```javascript
-  import wt from '@wochit/embedded';
+### Using [NPM](https://www.npmjs.com/package/@wochit/embedded) module
 
-  wt.config({ clientId, userToken });
-  
-  document.querySelector('.video-creator-btn').addEventListener('click', () => {
-    wt.openVideoCreator({});
-  });
-  ```
-  or
-  ```javascript
-  import { config, openVideoCreator } from '@wochit/embedded';
-  
-  config({ clientId, userToken });
-  
-  document.querySelector('.video-creator-btn').addEventListener('click', () => {
-    openVideoCreator({});
-  });
-  ```
+#### Install
+```shell
+npm i @wochit/embedded
+```
+```shell
+yarn add @wochit/embedded
+```
+```shell
+pnpm add @wochit/embedded
+```
 
-* CDN async (non-blocking)
+#### Using default import
+```javascript
+import wt from '@wochit/embedded';
+
+wt.config({ clientId, userToken });
+
+document.querySelector('.video-creator-btn').addEventListener('click', () => {
+  wt.openVideoCreator({});
+});
+```
+
+#### Using named import
+```javascript
+import { config, openVideoCreator } from '@wochit/embedded';
+
+config({ clientId, userToken });
+
+document.querySelector('.video-creator-btn').addEventListener('click', () => {
+  openVideoCreator({});
+});
+```
+
+### Using script from CDN
+* async IIFE (non-blocking)
   ```xhtml
   <script type="application/javascript">
     (function (window, document, tag, url, name, a, m) {
@@ -54,24 +61,45 @@ https://user-images.githubusercontent.com/3756473/167427983-89c60590-a1f5-4c6c-9
       a.async = 1;
       a.src = url;
       m.parentNode.insertBefore(a, m);
-    })(window, document, 'script', 'https://cdn.wochit.com/wochit-embedded/latest.min.js', 'wt');
+    })(window, document, 'script', 'https://embedded.wochit.com/latest.min.js', 'wt');
   </script>
-  ```
-  somewhere in your app
-  ```javascript
-  window.wt('config', { clientId, userToken });
-  document.querySelector('.video-creator-btn').addEventListener('click', () => {
-    window.wt('openVideoCreator', {});
-  });
   ```
   
-* CDN sync (blocking)
+* sync (blocking)
   ```xhtml
-  <script src="https://cdn.wochit.com/wochit-embedded/latest.min.js" type="application/javascript"></script>
-  <script type="application/javascript">
-    window.wt('config', { clientId, userToken });
-    document.querySelector('.video-creator-btn').addEventListener('click', () => {
-      window.wt('openVideoCreator', {});
-    });
-  </script>
+  <script
+    src="https://embedded.wochit.com/latest.min.js"
+    type="application/javascript"
+  ></script>
+  ```
+
+Then somewhere in your app:
+```javascript
+window.wt('config', { clientId, userToken });
+
+document.querySelector('.video-creator-btn').addEventListener('click', () => {
+  window.wt('openVideoCreator', {});
+});
+```
+
+#### Subresource Integrity ([SRI](https://developer.mozilla.org/en-US/docs/Web/Security/Subresource_Integrity))
+* To find integrity string for given version please check-out the [Releases](https://github.com/wochit/wochit-embedded/releases) page.
+* Use versioned CDN link, for example: embedded.wochit.com/**#.#.#**.min.js
+* add `crossorigin` and `integrity` attributes depending on usage like so:
+```javascript
+...
+a.setAttribute('crossorigin', 'anonymous');
+a.setAttribute('integrity', 'PASTE_INTEGRITY_STRING');
+// paste the above before this line:
+a.src = url;
+...
+```
+
+```xhtml
+<script
+  src="https://embedded.wochit.com/#.#.#.min.js"
+  type="application/javascript"
+  crossorigin="anonymous"
+  integrity="PASTE_INTEGRITY_STRING"
+></script>
   ```

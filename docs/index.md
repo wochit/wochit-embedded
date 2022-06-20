@@ -1,26 +1,31 @@
 # Quick Start
+Adding Wochit video creator to your web or mobile platform means your customers can create polished, high-quality videos without leaving your site. It’s fast, easy to integrate, and customizable to deliver a video experience specific to your users.  
 
-Give your platform users the power to create professional videos through our intuitive, embeddable, and easy-to-use white-label video editor.
+Give your platform users the power to create professional videos through our intuitive, embeddable, and easy-to-use white-label video editor!
 
 
-[Generate a token](/authentication.html#user-authentication) for every user and use the token to [open the video creator](/embed.html#embed-wochit-video-creator) in your web application. Once the video is ready, we will send you a notification using [webhooks](webhook.html#webhook).
+You should [Generate a token](/authentication.html#user-authentication) for each user and use the token to [open the video creator](/embed.html#embed-wochit-video-creator) in your web application. Your user will be able to select a template and produce a video based on the template they selected. Once the video is ready, we will send you a notification using [webhooks](webhook.html#webhook).
 
 Haven't found what you are looking for? [Contact us!](https://admin.wochit.com/contact-us)   
 
-   
+![An image](./docs/Wochit API user flow temp.png)     
+
 **Get your video editor up and running in just 3 steps!**
 
 ## Step 1: Get User Token
-Call Wochit REST API to get a *user-token* which will be used to open the Video Creator. 
+
+A user token is a unique access token that is used to authenticate the user. It will allow us to identify the user.  
+Call Wochit REST API to get a *userToken* which will be used to open the Video Creator. 
 
 Use your API keys to authenticate requests. 
-Post your *client_id* and *client_secret* along with your user's data. Get your API keys in the [Settings Dashboard](https://admin.wochit.com/settings)   
+Post your *Client ID* and *Secret Key* along with your user's data.   
+Get your *Client ID* and *Secret Key* in the [Developers Settings](https://admin.wochit.com/developers)   
 
 <code-group>
 <code-block title="cURL" active>
 ```bash
 curl https://studio-api.wochit.com/api/v1/authentication/insideUserTokens \
-  -H "Authorization: Bearer <client_secret>" -H "client-id: <client_id>" \
+  -H "Authorization: Bearer <secret_key>" -H "client-id: <client_id>" \
   -H "Content-Type: application/json" \
   -d {"user":{"id": "<user_identifier>"}}
 ```
@@ -44,7 +49,7 @@ curl https://studio-api.wochit.com/api/v1/authentication/insideUserTokens \
 </code-group>
 
 
-Use the token value to open the Wochit video creator in the next step. The token expiration time is one week. 
+Use the token value to open the Wochit video creator in the next step. The token expiration time is 24 hours. 
 
 More on Authentication [here!](/authentication.html#user-authentication)
 
@@ -92,7 +97,7 @@ yarn add @wochit/embedded
     a.async = 1;
     a.src = url;
     m.parentNode.insertBefore(a, m);
-  })(window, document, 'script', 'https://cdn.wochit.com/wochit-embedded/latest.min.js', ‘wochit’);
+  })(window, document, 'script', 'https://embedded.wochit.com/latest.min.js', ‘wochit’);
 </script>
 ```
 </code-block>
@@ -105,7 +110,7 @@ yarn add @wochit/embedded
 
 ### Context configuration
 
-Call config() to set up the integration context. It must be called only once in the scope where *client_id* and *user-token* are easily available. 
+Call config() to set up the integration context. It must be called only once in the scope where *Client ID* and *userToken* are easily available. 
 
 <code-group>
 
@@ -131,7 +136,7 @@ window.wt('config', { clientId, userToken });
 
 ### Open the video creator
 
-Call openVideoCreator() to open the video creation application in iframe. 
+Call openVideoCreator() to open the video creation application.
 
 
 <code-group>
@@ -155,7 +160,7 @@ document.querySelector('.video-creator-btn').addEventListener('click', () => {
 
 </code-group>
 
-This javascript should be launched from your site. See how you can [customize your video creator!](/embed.html#open-the-video-creator)
+This javascript should be launched from your site. See how you can [configure your video creator!](/embed.html#open-the-video-creator)
 
 
 
