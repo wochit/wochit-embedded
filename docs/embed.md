@@ -285,7 +285,6 @@ Need any technical assistance? Click on the bubble at the bottom right side of t
 
 ## Personalize the Experience
 
-<<<<<<< HEAD
 We allow you to set the default configuration to all users in our [admin panel](https://admin.wochit.com/my-video-creator), but sometimes you need to personalize the experience for specific users. It can be by adding more features to premium users or set up different UI language for different users.
 
 ### Allow access to stock images and videos
@@ -562,4 +561,3 @@ The video creator will open with the
 =======
 Wochit’s video creator can jump-start the templates with pre-injected data, personalized to each user. 
 Each template can receive a JSON object as in the example below:
->>>>>>> origin/develop
