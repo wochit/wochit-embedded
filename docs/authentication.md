@@ -14,17 +14,18 @@ Use your API keys to authenticate requests. You can view your *Client ID* and *S
 <code-block title="cURL" active>
 
 ```bash
-curl https://studio-api.wochit.com/api/v1/authentication/insideUserTokens \
-  -H "Authorization: Bearer <secret_key>" -H "client-id: <client_id>" \
-  -H "Content-Type: application/json" \
-  -d {
-  "user": {
-    "id": "<user_identifier>",
-    "email": "<user_email>",
-    "firstName": "<user_first-name>",
-    "lastName": "<user_last-name>"
-  }
-}
+curl --request POST 'https://authentication.wochit.com/api/v1/embedded/users/tokens' \
+--header 'Authorization: Bearer <secret key>' \
+--header 'client-id: <client id>' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "user": {
+        "id": "<your user id>",
+        "email": "<user_email>",
+        "firstName": "<user_first-name>",
+        "lastName": "<user_last-name>"
+    }
+}'
 ```
 
 </code-block>
@@ -44,9 +45,9 @@ const data = JSON.stringify({
 });
 
 const options = {
-  hostname: 'studio-api.wochit.com',
+  hostname: 'authentication.wochit.com',
   port: 443,
-  path: '/api/v1/authentication/insideUserTokens',
+  path: '/api/v1/embedded/users/tokens',
   method: 'POST',
   headers: {
     'channel-id': '<client_id>',
@@ -86,7 +87,7 @@ const body = JSON.stringify({
   },
 });
 
-fetch('https://studio-api.wochit.com/api/v1/authentication/insideUserTokens', {
+fetch('https://authentication.wochit.com/api/v1/embedded/users/tokens', {
   method: 'POST',
   headers: {
     'channel-id': '<client_id>',
@@ -128,7 +129,7 @@ headers = {
 
 data = {"user": {"id": "<user-id>", "email": "<user-email>", "firstName": "<user-first-name>", "lastName": "<user-last-name>"}}
 
-auth_url = "https://studio-api.wochit.com/api/v1/authentication/insideUserTokens"
+auth_url = "https://authentication.wochit.com/api/v1/embedded/users/tokens"
 response = requests.post(auth_url, json=data, headers=headers)
 json.loads(response.text)
 ```
@@ -144,7 +145,7 @@ UserToken userToken = UserToken.builder().user(user).build();
 String requestBody = new ObjectMapper().writeValueAsString(userToken);
 
 HttpRequest request = HttpRequest.newBuilder()
-        .uri(URI.create("https://studio-api.wochit.com/api/v1/authentication/insideUserTokens"))
+        .uri(URI.create("https://authentication.wochit.com/api/v1/embedded/users/tokens"))
         .POST(HttpRequest.BodyPublishers.ofString(requestBody))
         .header("Content-Type", "application/json")
         .header("Authorization", "Bearer <secret_key>")
@@ -199,9 +200,16 @@ We use conventional HTTP response codes to indicate the success or failure of an
 <code-block title="400 - Bad Request" active>
 ```json
 {
-  'code': 400,
-  'message': 'Something Wrong Happened: TraceId: cbfa9fe4430d56be59cc96b26ee12eb3',
-  'details': None
+    "code": 400,
+    "type": "Bad Request",
+    "requestId": "cd1573f505be1e12aa023e500db50a09",
+    "errors": [
+        {
+            "parameter": "use1",
+            "message": "UNRECOGNIZED_PROPERTY",
+            "details": "Unrecognized field \"use1\" (class models.requests.CreateInsideUserTokenRequestModel), not marked as ignorable"
+        }
+    ]
 }
 ```
 </code-block>
@@ -209,9 +217,14 @@ We use conventional HTTP response codes to indicate the success or failure of an
 <code-block title="401 - Unauthorized" >
 ```json
 {
-  'code': 401,
-  'message': 'Something Wrong Happened: TraceId: 1253ee8a4dec867c16e002fd7e15d164',
-  'details': None
+    "code": 401,
+    "type": "Unauthorized",
+    "requestId": "a01bba8890f480fc0aef7d3723feb523",
+    "errors": [
+        {
+            "message": "HTTP 401 Unauthorized"
+        }
+    ]
 }
 ```
 </code-block>
@@ -219,9 +232,10 @@ We use conventional HTTP response codes to indicate the success or failure of an
 <code-block title="500 - Internal Server Error (Rare)" >
 ```json
 {
-  "code": 500,
-  "message": "Something Wrong Happened: TraceId: 83a9b0a64b6d3ce2f86d297b8ce560b0",
-  "details": null
+    "code": 500,
+    "type": "Internal Server Error",
+    "requestId": "90a5f277e13f78e26dbfd0d02c37f2d7",
+    "errors": []
 }
 ```
 </code-block>

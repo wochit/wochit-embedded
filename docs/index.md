@@ -23,11 +23,17 @@ Get your *Client ID* and *Secret Key* in the [Developers Settings](https://admin
 
 <code-group>
 <code-block title="cURL" active>
+
 ```bash
-curl https://studio-api.wochit.com/api/v1/authentication/insideUserTokens \
-  -H "Authorization: Bearer <secret_key>" -H "client-id: <client_id>" \
-  -H "Content-Type: application/json" \
-  -d {"user":{"id": "<user_identifier>"}}
+curl --request POST 'https://authentication.wochit.com/api/v1/embedded/users/tokens' \
+--header 'Authorization: Bearer <secret key>' \
+--header 'client-id: <client id>' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "user": {
+        "id": "<your user id>"
+    }
+}'
 ```
 </code-block>
 
