@@ -42,7 +42,7 @@ The title of the video.
 * 100.25.120.71
 :::
 
-Need any technical assistance? Click on the bubble at the bottom right side of the screen to chat with us!
+Need any technical assistance? [Contact us!](https://admin.wochit.com/contact-us) 
 
 
 

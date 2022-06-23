@@ -1,5 +1,7 @@
 # User Authentication
 
+## Get a user token
+
 A user token is a unique access token that is used to authenticate the user. It will allow us to identify the user.
 
 Call Wochit REST API to get a *user-token* which will be used to open the Video Creator.  
@@ -190,7 +192,7 @@ required parameter**. Email, firstName and lastName are optional for statistics 
 The token value is the *userToken*. Use *userToken* to [open the Wochit video creator!](/embed.html#set-configuration) 
 The token expiration time is 24 hours. 
 
-### Errors
+## Error handling
 
 We use conventional HTTP response codes to indicate the success or failure of an API request.
 
@@ -241,4 +243,4 @@ We use conventional HTTP response codes to indicate the success or failure of an
 </code-block>
 </code-group>
 
-Need any technical assistance? Click on the bubble at the bottom right side of the screen to chat with us! 
+Need any technical assistance? [Contact us!](https://admin.wochit.com/contact-us) 

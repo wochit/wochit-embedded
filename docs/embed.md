@@ -155,26 +155,37 @@ We trigger events while the user is using the video creator. This is an object t
 For more information see [Triggered Events](/embed.html#triggered-events).
 ***  
 **showCreativeGallery** <code>boolean</code> <Badge text="Optional" />   
-Whether to show the Getty Images creative media library search in the Creative tab. This will allow your user to use licensed media assets. You can read more about how [personalize the user experience](/embed.html#personalize-the-experience).
+Whether to show the Getty Images creative media library search in the Creative tab. You can allow users to enjoy unlimited rights-cleared access to the entire Getty image and video creative library.  
+*(The default value can be set in the [admin panel](https://admin.wochit.com/my-video-creator) under *Look & Feel -> Advanced -> Stock photos & videos*.
+)*   
 ***
-**showUploadGallery** <code>boolean</code> <Badge text="Optional" />  *(default can be set up in the [admin panel](https://admin.wochit.com/my-video-creator))*  
-Whether to show the tab that allows users to upload custom media. You can read more about how [personalize the user experience](/embed.html#personalize-the-experience).
+**showUploadGallery** <code>boolean</code> <Badge text="Optional" />     
+You can allow users the option to upload their own content from their device to be used in the video they create.   
+*(The default value can be set in the [admin panel](https://admin.wochit.com/my-video-creator) under *Look & Feel -> Advanced -> Allow self uploads*.)*
+
 ***
-**destLanguage** <code>string</code> <Badge text="Optional" /> *(default can be set up in the [admin panel](https://admin.wochit.com/my-video-creator))*     
-Pass language code to adjust the Video Editor UI. Available options are: en, fr, es, de, ja, it, es, svg, da and nb. 
+**destLanguage** <code>string</code> <Badge text="Optional" />      
+Pass language code to adjust the Video Editor UI. Available options are: en, es and de.  
+*(The default value can be set in the [admin panel](https://admin.wochit.com/my-video-creator) under *Look & Feel -> Localization -> Language*.)*   
+Note: Our default language is English. Template titles will not be translated from English.
 ***
 **galleryAssets** <code>object[]</code> <Badge text="Optional" />  
-You may pass an array of objects containing lists with images / video URLs. The video creator will display these assets under the "My Gallery" tab, as the end-user will be able to choose an asset from the given list to be used in the video.
+You may pass an array of objects containing lists with images / video URLs. The video creator will display these assets under the "My Gallery" tab, as the end-user will be able to choose an asset from the given list to be used in the video.  
+See how you can [personalize the user experience](/embed.html#add-personal-asset-gallery) by sending an array of the user's personal assets.
 ***
 **linkedFields** <code>object</code> <Badge text="Optional" />  
 Wochit’s video creator can jump-start the templates with pre-injected data, personalized to each user.   
-You can [personalize the user experience](/embed.html#personalize-the-experience) by sending an array of personal data injected to the video.
+You can [personalize the user experience](/embed.html#linked-fields) by sending an array of personal data injected to the video.
 ***
-**categoryNames** <code>string[]</code> <Badge text="Optional" />  *(default can be set up in the [admin panel](https://admin.wochit.com/my-video-creator))*  
-Template categories are selected in the Admin Panel. You can set the video creator to display templates of specific categories by sending a comma-separated list of category names. 
+**categoryNames** <code>string[]</code> <Badge text="Optional" />     
+Template categories are selected in the [admin panel](https://admin.wochit.com/my-video-creator) under *Templates*. You can set the video creator to display templates of specific categories by sending a comma-separated list of category names. 
+```javascript
+categoryNames: 'Food,Health & Wellness,Story Telling,TikTok'
+```
+Here's a [full list](/categories.html) of available template categories.
 ***
 **videoId** <code>string</code> <Badge text="Optional" />  
-You can open the video editor in editing mode of a specific video that has been previously produced. Note: We assign a new Wochit video ID to the edited video. You will be able to get it once the [user clicked to produce the video](/embed.html#triggered-events). 
+You can open the video editor in editing mode of a specific video that has been previously produced. Note: We assign a new Wochit video ID to the edited video. You will be able to get it once the [user clicks to produce the video](/embed.html#triggered-events). 
 ***
 **containerEl** <code>HTMLElement</code> <Badge text="Optional" />  
 By default, the video creator app will open in a modal on your website.
@@ -194,10 +205,10 @@ Need any code examples? See some use cases here.
 The following events will be triggered as the user interacts with the video creator widget. You are welcome to add implement callback functions on your side and react to any of these events.
 
 <code>on.loaded</code>
-Triggered when video Creator resources has been loaded.  
+Triggered when the video Creator resources have been loaded.  
 
 <code>on.ready</code>
-Triggered when video Creator is ready to use and user can start working.  
+Triggered when the video Creator is ready to use and the user can start working.  
 
 <code>on.abort</code>
 Triggered when the user clicked to close the Video Creator.  
@@ -276,46 +287,19 @@ Direct link to the thumbnail of the video. Links have an expiration time of X mi
 
 
 ::: danger Important!
-Getting the produced video by listening to the <code>produce_done</code> event is less secured. We recommend implementing a listener to [a webook endpoint](/webhook.html).
+Getting the produced video by listening to the <code>produce_done</code> event is less secure. We recommend implementing a listener to [a webhook endpoint](/webhook.html).
 
 :::
 
-Need any technical assistance? Click on the bubble at the bottom right side of the screen to chat with us!
+Need any technical assistance? [Contact us!](https://admin.wochit.com/contact-us) 
 
 
 ## Personalize the Experience
 
-We allow you to set the default configuration to all users in our [admin panel](https://admin.wochit.com/my-video-creator), but sometimes you need to personalize the experience for specific users. It can be by adding more features to premium users or set up different UI language for different users.
-
-### Allow access to stock images and videos
-You can let your users enjoy unlimited rights-cleared access to the entire Getty image and video creative library.
-The default value can be set in the [admin panel](https://admin.wochit.com/my-video-creator) under *Look & Feel -> Advanced -> Stock photos & videos*. You can override it by setting **showCreativeGallery** property to *true* or *false* in the openVideoCreator() function. 
-
-[image of getty library in SC]
-***
-### Allow the user to upload images and videos
-You can let users the option to allow upload their own content from their device to be used in the video they create. The default value can be set in the [admin panel](https://admin.wochit.com/my-video-creator) under *Look & Feel -> Advanced -> Allow self uploads*. You can override it by setting **showUploadGallery** property to *true* or *false* in the openVideoCreator() function.
-
-[image of self upload tab in SC]
-***
-### Set UI language
-You can set the UI language of the video creator.     
-The default value can be set in the [admin panel](https://admin.wochit.com/my-video-creator) under *Look & Feel -> Localization -> Language*. You can override it by setting **destLanguage** property in the openVideoCreator() function to one of the supported languages below:
-| Language        | Value           | 
-| ------------- |:-------------:| 
-| English(US)      | en | 
-| German     | de      |  
-| French | fr     | 
-| Japanese | ja      | 
-| Italian | it      | 
-| Spanish | es      | 
-| Swedish | svg      | 
-| Danish | da      | 
-| Norwegian | nb      | 
+We allow you to set the default configuration to all users in our [admin panel](https://admin.wochit.com/my-video-creator), but sometimes you need to personalize the experience for specific users. You can add more features to premium users or set up different UI language for users based on the user's localization.
+It can be done by setting different parameters of the openVideoCreator() function. 
 
 
-Note: Our default language is English. Template titles will not be translated from English. 
-***
 
 ### Add personal asset gallery
 You may pass an array of objects containing lists with images / video URLs. The video creator will display these assets under the "My Gallery" tab, as the end-user will be able to choose an asset from the given list to be used in the video. 
@@ -377,187 +361,14 @@ The video duration in seconds.
 ***
 
 
-### Category selection
-
-You can control which template each user has access to. The default templates can be selected in the [admin panel](https://admin.wochit.com/my-video-creator) under *Templates*. You can override it by setting **categoryNames** property to a list of category names in the openVideoCreator() function. 
-```javascript
-categoryNames: 'Food,Health & Wellness,Story Telling,TikTok'
-```
-Here's a full list of available template categories: 
-
-**Segment:** 
-- DIY
-- Ecommerce
-- Food
-- Travel
-- Trainers
-- Education
-- Health & Wellness  
-
-**Use-Case:**  
-- Profile
-- Brand & Marketing
-- Sales
-- Promotion
-- User-Generated
-- Video Tutorial
-- How To  
-- Case Study
-- Community Relations
-- Product Review  
-
-**Complexity:**  
-- Express Message
-- Short Message
-- Story Telling  
-
-**Platform:**  
-- TikTok
-- YouTube
-- Facebook
-- Instagram
-
 ### Linked fields
 
 Wochit’s video creator can jump-start the templates with pre-injected data, personalized to each user.   
-You can personalize the user experience by sending an array of personal data injected to the video.
+You can personalize the user experience by sending an array of personal data injected to the video. The template will open with the user information you send. It can be the user name, image, contact details and more.  
 
-[we might remove this for MVP]
 
 
 ## Code Examples
 
 
-Use Case:
 
-
-Add info here. 
-
-
-
-<code-group>
-<code-block title="Module" active>
-```js
-import { openVideoCreator } from '@wochit/embedded';
-
-var galleryAssets = [
-  {
-    "title": "Swiss Alpine Resort",
-    "assets": [
-      {
-        "url": "https://q-xx.bstatic.com/xdata/images/hotel/840x460/271010487.jpg?k=5288eeeb88268f6b680b74017eecdd6b242813a87e30dc10124dd51087d7ae1c&o=",
-        "type": "image"
-      },
-      {
-        "url": "https://q-xx.bstatic.com/xdata/images/hotel/840x460/271010490.jpg?k=9c14c57cb69f550e3b1f8a649001395f587a800c5cd972b2051451e8841d6595&o=",
-        "type": "image"
-      }
-    ]
-  },
-  {
-    "title": "Linder Grand Hotel",
-    "assets": [
-      {
-        "url": "https://pix8.agoda.net/hotelImages/8947507/0/d6e91ea13a7a551fb1940665d960f96b.jpg?s=1024x768",
-        "type": "image"
-      },
-      {
-        "url": "https://pix8.agoda.net/hotelImages/4877643/0/03b577ed097bd23b5eb7cc29bed93679.jpg?ca=23&ce=0&s=1024x768",
-        "type": "image"
-      }
-    ]
-  }
-];
-
-document.querySelector('.video-creator-btn').addEventListener('click', () => {
-  openVideoCreator({
-    videoContext: 'my-page-context',
-    destLanguage: 'en',
-    categoryNames: null,
-    galleryAssets,
-    linkedFields,
-    on: {
-      loaded: ($iframe) => {
-        console.log('loaded', $iframe);
-      },
-      ready: () => {
-        console.log('ready');
-      },
-      abort: (payload) => {
-        console.log('abort', payload);
-      },
-      produce: (payload) => {
-        console.log('produce', payload);
-      },
-    },
-  }); 
-});
-```
-</code-block>
-
-<code-block title="HTML">
-```js
-window.wt('config', { clientId, userToken });
-
-var galleryAssets = [
-  {
-    "title": "Swiss Alpine Resort",
-    "assets": [
-      {
-        "url": "https://q-xx.bstatic.com/xdata/images/hotel/840x460/271010487.jpg?k=5288eeeb88268f6b680b74017eecdd6b242813a87e30dc10124dd51087d7ae1c&o=",
-        "type": "image"
-      },
-      {
-        "url": "https://q-xx.bstatic.com/xdata/images/hotel/840x460/271010490.jpg?k=9c14c57cb69f550e3b1f8a649001395f587a800c5cd972b2051451e8841d6595&o=",
-        "type": "image"
-      }
-    ]
-  },
-  {
-    "title": "Linder Grand Hotel",
-    "assets": [
-      {
-        "url": "https://pix8.agoda.net/hotelImages/8947507/0/d6e91ea13a7a551fb1940665d960f96b.jpg?s=1024x768",
-        "type": "image"
-      },
-      {
-        "url": "https://pix8.agoda.net/hotelImages/4877643/0/03b577ed097bd23b5eb7cc29bed93679.jpg?ca=23&ce=0&s=1024x768",
-        "type": "image"
-      }
-    ]
-  }
-];
-
-document.querySelector('.video-creator-btn').addEventListener('click', () => {
-  window.wt('openVideoCreator', {
-    videoContext: 'my-page-context',
-    destLanguage: 'en',
-    categoryNames: null,
-    galleryAssets,
-    linkedFields,
-    on: {
-      loaded: ($iframe) => {
-        console.log('loaded', $iframe);
-      },
-      ready: () => {
-        console.log('ready');
-      },
-      abort: (payload) => {
-        console.log('abort', payload);
-      },
-      produce: (payload) => {
-        console.log('produce', payload);
-      },
-    },
-  });
-});
-```
-</code-block>
-
-</code-group>
-
-
-The video creator will open with the 
-=======
-Wochit’s video creator can jump-start the templates with pre-injected data, personalized to each user. 
-Each template can receive a JSON object as in the example below:
