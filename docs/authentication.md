@@ -2,13 +2,11 @@
 
 ## Get a user token
 
-A user token is a unique access token that is used to authenticate the user. It will allow us to identify the user.
+A user token is a unique access token that is used to authenticate the user. It allows us to securely identify the user, link it to your account, and provide you with related user analytics later on.  
 
-Call Wochit REST API to get a *user-token* which will be used to open the Video Creator.  
-A *user-token* is required to initialize the Video Creator. It will allow us to identify you and your user.
+### Request
 
-Use your API keys to authenticate requests. You can view your *Client ID* and *Secret Key* in the [Developers Settings](https://admin.wochit.com/developers).
-
+Call Wochit REST API to get a user-token. This token will be used later on to open the Video Creator:   
 
 
 <code-group>
@@ -163,15 +161,20 @@ System.out.println(response.body());
 
 </code-group>
 
-Authenticate via bearer authentication sending the followings:  
-**Header**: *Client ID* and *Secret Key* - these are your API keys.   
-Your API keys carry many privileges, so be sure to keep them secure! Do not share your secret API keys in publicly accessible areas such as GitHub, client-side code, and so forth.     
-   
-**Data**: *User* object that contains information about the user.   
-Note: **user.id** is a unique identifier of your user and **is a
-required parameter**. Email, firstName and lastName are optional for statistics and usage reports.
+Authenticate via bearer authentication sending the following params:  
+#### Header:
+* *Client ID* and *Secret Key* - these are your API keys.   
+  Please refer to our [Developer Tools](https://admin.wochit.com/developers/integration-setup) to obtain your keys.
 
 
+NOTE: Your API keys carry many privileges, be sure to keep them secure! Do not share your secret API keys in publicly accessible areas such as GitHub, client-side code, and so forth.     
+
+#### Data    
+* ID - mandatory. This is a unique identifier of your platform user.
+* Email, First Name, Last Name - optional (highly recommended). These parameters will be used for statistics and usage reports.
+
+
+### Response  
 
 
 <code-group>
@@ -189,8 +192,8 @@ required parameter**. Email, firstName and lastName are optional for statistics 
 
 </code-group>
 
-The token value is the *userToken*. Use *userToken* to [open the Wochit video creator!](/embed.html#set-configuration) 
-The token expiration time is 24 hours. 
+The token value is the *userToken*. Use *userToken* to [open the Wochit Video Creator](/embed.html#set-configuration). 
+The token expiration time is 24 hours from creation time. 
 
 ## Error handling
 
@@ -243,4 +246,4 @@ We use conventional HTTP response codes to indicate the success or failure of an
 </code-block>
 </code-group>
 
-Need any technical assistance? [Contact us!](https://admin.wochit.com/contact-us) 
+Need any technical assistance? [Contact us!](https://www.wochit.com/contact) 
