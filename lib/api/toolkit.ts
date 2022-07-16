@@ -32,11 +32,15 @@ export function hasObject(value: unknown): value is object {
   return typeof value === 'object' && value !== null;
 }
 
-export function logError(msg: string) {
+export function logError(error: unknown) {
   if (typeof window.reportError === 'function') {
-    window.reportError(new Error(`${LOGGER_PREFIX} ${msg}`));
+    if (hasString(error)) {
+      window.reportError(new Error(`${LOGGER_PREFIX} ${error}`));
+    } else {
+      window.reportError(error);
+    }
   } else {
-    console?.error(LOGGER_PREFIX, msg);
+    console?.error(LOGGER_PREFIX, error);
   }
 }
 
