@@ -131,14 +131,19 @@ export class WochitEmbeddedApp {
     this.#mountIframe();
   }
 
-  #isRelevantMessage(e: MessageEvent<any>): boolean {
-    const originUrl = new URL(e.origin);
-    return (
-      originUrl.hostname.endsWith(WOCHIT_DOMAIN_MASK) &&
-      hasObject(common) &&
-      hasObject(shortcut) &&
-      this.#$iframe !== null
-    );
+  #isRelevantMessage(e: MessageEvent<unknown>): boolean {
+    let rv = false;
+    try {
+      const originUrl = new URL(e.origin);
+      rv =
+        originUrl.hostname.endsWith(WOCHIT_DOMAIN_MASK) &&
+        hasObject(common) &&
+        hasObject(shortcut) &&
+        this.#$iframe !== null;
+    } catch (ignore) {
+      //
+    }
+    return rv;
   }
 
   #onMessage(e: MessageEvent<TWindowMessageData | IApplicationEvent>): void {
