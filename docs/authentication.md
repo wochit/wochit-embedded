@@ -6,7 +6,7 @@ A user token is a unique access token that is used to authenticate the user. It 
 
 ### Request
 
-Call Wochit REST API to get a user-token. This token will be used later on to open the Video Creator:   
+Call Wochit REST API to get a user-token. This token will be used later on to open the Video Editor:   
 
 
 <code-group>
@@ -192,7 +192,7 @@ NOTE: Your API keys carry many privileges, be sure to keep them secure! Do not s
 
 </code-group>
 
-The token value is the *userToken*. Use *userToken* to [open the Wochit Video Creator](/embed.html#set-configuration). 
+The token value is the *userToken*. Use *userToken* to [open the Wochit Video Editor](/embed.html#set-configuration). 
 The token expiration time is 24 hours from creation time. 
 
 ## Error handling

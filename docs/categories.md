@@ -34,4 +34,4 @@ Here's a full list of available template categories:
 - Facebook
 - Instagram
 
-[<- Back](/embed.html#open-the-video-creator)  
+[<- Back](/embed.html#open-the-video-editor)  
