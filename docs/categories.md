@@ -3,13 +3,15 @@
 Here's a full list of available template categories: 
 
 **Segment:** 
-- DIY
-- Ecommerce
+- How To
+- Sales & Promos
 - Food
 - Travel
-- Trainers
-- Education
-- Health & Wellness  
+- Wellness  
+- Real Estate
+- Pop Culture
+- HR
+- Sports
 
 **Use-Case:**  
 - Profile
@@ -18,10 +20,12 @@ Here's a full list of available template categories:
 - Promotion
 - User-Generated
 - Video Tutorial
-- How To  
+- Vlog  
+- DIY  
 - Case Study
 - Community Relations
 - Product Review  
+- Event
 
 **Complexity:**  
 - Express Message
@@ -33,5 +37,7 @@ Here's a full list of available template categories:
 - YouTube
 - Facebook
 - Instagram
+- Pintrest
+- LinkedIn
 
 [<- Back](/embed.html#open-the-video-creator)  

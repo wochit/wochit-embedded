@@ -1,5 +1,5 @@
 # Quick Start
-Add Wochit Video Creator to your platform and have  your customers create professional videos swiftly and intuitively, without leaving your site.   
+Add Wochit Video Creator to your platform and have your customers create professional videos swiftly and intuitively, without leaving your site.   
 
 The Wochit Video Creator can be fully customized to fit your brand and offer the right templates for your audience. [Log-in to our admin site](https://admin.wochit.com) to customize your Video Creator.  
 

@@ -75,7 +75,7 @@ window.wt('config', { clientId, userToken });
 *** 
 **clientId** <code>string</code> <Badge text="Required" type="warning"/>  
 Your unique *Client ID*.  
-Log-in to the Wochit Developers’ Tools to obtain your *Client ID*. 
+Log-in to the Wochit [Developers’ Tools](https://admin.wochit.com/developers/integration-setup) to obtain your *Client ID*. 
 ***  
 **userToken** <code>string</code> <Badge text="Required" type="warning"/>  
 A user token that is the unique key generated every time a user accesses the Wochit Video Creator, as explained [above](/authentication.html#user-authentication).
@@ -86,7 +86,7 @@ A user token that is the unique key generated every time a user accesses the Woc
 ## Open the video creator
 
 Call openVideoCreator() to open your customized Wochit Video Creator in an iFrame.  
-The following example shows how to create a button or a link that trigger the openVideoCreator action: 
+The following example shows how to create a button or a link that triggers the openVideoCreator action: 
   
 
 
@@ -147,11 +147,11 @@ document.querySelector('.video-creator-btn').addEventListener('click', () => {
 #### Customize the Wochit Video Creator by using the following properties:  
 *** 
 **videoContext** <code>string</code> <Badge text="Optional" />   
-This property can be set as a unique identifier. It could  be a customer ID, a page ID, or any other metadata  you may want to use  to reconcile the produced video with your internal systems. [We will send it back](/webhook.html) with the produced video so you can know where the video belongs.   
+This property can be set as a unique identifier. It could be a customer ID, a page ID, or any other metadata you may want to use to reconcile the produced video with your internal systems. [We will send it back](/webhook.html) with the produced video so you can know where the video belongs.   
 *Sending videoContext is highly recommended*
 *** 
 **on** <code>object</code> <Badge text="Optional" />   
-While your end-user interacts with the Wochit Video Creator iFrame, events will be triggered to notify you on the user’s actions and allow you to react to these.   
+While your end-user interacts with the Wochit Video Creator iFrame, events will be triggered to notify you of the user’s actions and allow you to react to these.   
 For more information see [Triggered Events](/embed.html#triggered-events).
 ***  
 **showCreativeGallery** <code>boolean</code> <Badge text="Optional" />   
@@ -161,7 +161,7 @@ Whether to allow users to choose from Wochit’s extensive library of rights-cle
 ***
 **showUploadGallery** <code>boolean</code> <Badge text="Optional" />     
 Whether to allow users to upload their own content from their device.   
-*(The default value can be set in the [admin panel](https://admin.wochit.com/my-video-creator) under *Look & Feel -> Advanced -> Allow self uploads*.)*
+*(The default value can be set in the [admin panel](https://admin.wochit.com/my-video-creator) under *Look & Feel -> Advanced -> Self upload photos and videos*.)*
 
 ***
 **destLanguage** <code>string</code> <Badge text="Optional" />      
@@ -169,20 +169,29 @@ Pass language code to adjust the Video Editor UI. Available options are: en, es,
 *(The default value can be set in the [admin panel](https://admin.wochit.com/my-video-creator) under *Look & Feel -> Localization -> Language*.)*   
 Note: Our default language is English. 
 ***
+**aspectRatios** <code>string[]</code> <Badge text="Optional" />  
+To filter the templates with specific aspect ratios, pass a list of comma-separated aspect ratios. 
+*(The default value can be set in the [admin panel](https://admin.wochit.com/my-video-creator) under *Templates -> Aspect Ratio*.)*
+This filtering can be used in order to present templates targeted to different social media platforms. 
+```javascript
+aspectRatios: 'ASPECT_16_9, ASPECT_1_1'
+```
+Available options are: ASPECT_16_9, ASPECT_1_1 and ASPECT_9_16.
+***
 **galleryAssets** <code>object[]</code> <Badge text="Optional" />  
 You may pass a list of image / video URLs. The Wochit Video Creator will show these assets under the "My Gallery" tab, for the end-user to choose for their video.  
 See how you can [personalize the user experience](/embed.html#add-personal-asset-gallery) by sending an array of the user's personal assets.
 ***
 **linkedFields** <code>object</code> <Badge text="Optional" />  
 Wochit’s Video Creator can jump-start the templates with pre-injected data, personalized to each user.   
-You can [personalize the user experience](/embed.html#linked-fields) by sending an array of personal data injected to the video.
+You can [personalize the user experience](/embed.html#linked-fields) by sending an array of personal data injected into the video.
 ***
 **categoryNames** <code>string[]</code> <Badge text="Optional" />   
 Each template in the template gallery belongs to one or more categories. In the [admin panel](https://admin.wochit.com/my-video-creator) you can choose the entire set of templates you’d like to include in your Video Creator. Use the categoryName parameter to filter the template gallery for specific categories. For example - this filtering can be used in order to present one set of templates for end-users accessing the Video Creator from entry point A, and a different set of templates for end-users accessing from entry point B.  
-To filter the templates for specific categories, pass a list of comma-separated category names. If empty, the entire gallery of  templates will be shown.
+To filter the templates for specific categories, pass a list of comma-separated category names. If empty, the entire gallery of templates will be shown.
 
 ```javascript
-categoryNames: 'Food,Health & Wellness,Story Telling,TikTok'
+categoryNames: 'Food,Wellness,Story Telling,TikTok'
 ```
 Here's a [full list](/categories.html) of available template categories.
 ***
@@ -218,17 +227,38 @@ Triggered when the user clicked the ‘Exit’ button or chose to close the Vide
 <code>on.produce</code>
 Triggered when the user clicked the ‘Produce’ button. In this case, a payload with the wochit videoId will be passed to the event.  
 Payload example:
+
 ```json
-{ 
-       videoId: "6094092472a9105747957aa3",
-       videoState: "PROCESSING",
-       videoUrl: null
+{
+  duration: 18.5341
+  title: "Video Title"
+  videoContext: "ABC"
+  videoId: "6094092472a9105747957aa3"
+  videoState: "PROCESSING"
 }
 ```
-*add description of properties  
+
+#### Attributes:
+***
+**duration** <code>float</code>  
+The video duration in seconds. 
+***
+**title** <code>string</code>  
+The title of the video.  
+***
+**videoContext** <code>string</code>  
+String initiated when calling openVideoCreator(). [videoContext](/embed.html#you-can-customize-the-video-creator-by-using-the-following-properties) connects the video to the video creator instance, so you can know where the video belongs to. 
+***
+**videoId** <code>string</code>  
+Wochit unique identifier for this video. You can use it to [re-edit the video](/embed.html#you-can-customize-the-video-creator-by-using-the-following-properties). 
+***
+**videoState** <code>string</code>   
+This property indicates the state of the video. 'PROCESSING' is the initial state of the video.  
+***
+
+
+
 <code>on.produce_done</code>
-
-
 Triggered as soon as a video is produced. A payload with a link to the video alongside some additional metadata will be passed to the event:   
 Payload example:
 
@@ -263,7 +293,7 @@ Payload example:
 
 </code-group>
 
-### Attributes:
+#### Attributes:
 ***
 **state** <code>string</code>   
 This property indicates the state of the video. 'DONE' means that the video has been produced successfully. 'FAILED' means that the video production failed. 
@@ -299,7 +329,7 @@ Need any technical assistance? [Contact us!](https://www.wochit.com/contact/)
 ## Personalize the Experience
 
 All default values for the Wochit Video Creator are defined in our [admin tool](https://admin.wochit.com/my-video-creator).  
-However, sometimes, you may need to personalize the experience for specific users. For example - you may want to add  more features to premium users; or set up a different UI language for users based on their localization. This can be done by setting overriding the defaults and passing specific  parameters to the openVideoCreator() function.   
+However, sometimes, you may need to personalize the experience for specific users. For example - you may want to add more features to premium users; or set up a different UI language for users based on their localization. This can be done by setting overriding the defaults and passing specific parameters to the openVideoCreator() function.   
 
 
 
@@ -346,7 +376,7 @@ The galleryAssets property is structured in a JSON format with the following par
 This is the name of the folder.  
 ***
 **assets** <code>object[]</code> <Badge text="Required" type="warning"/> 
-An array of assets object. Each asset has the following properties: 
+An array of assets objects. Each asset has the following properties: 
 
 - **type** <code>string</code> <Badge text="Required" type="warning"/>  
 The type of the asset. Can be *image* or *video*. 

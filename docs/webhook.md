@@ -1,7 +1,7 @@
 # Webhook
 
 
-Define and implement a  webhook to be notified whenever a video is created by one of your end-users.  The notification will be triggered asynchronously, whether the Video Creator iFrame is open or not.    
+Define and implement a webhook to be notified whenever a video is created by one of your end-users. The notification will be triggered asynchronously, whether the Video Creator iFrame is open or not.    
 Set up your webhook endpoint [here!](https://admin.wochit.com/developers/integration-setup) 
 
 Once a video is successfully produced on the Wochit servers,  a POST request will be sent to  the Webhook address provided. Expect the following JSON structure:
