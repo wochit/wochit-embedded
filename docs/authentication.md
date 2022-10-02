@@ -161,7 +161,7 @@ System.out.println(response.body());
 
 </code-group>
 
-Authenticate via bearer authentication sending the following params:  
+Authenticate via bearer authentication by sending the following params:  
 #### Header:
 * *Client ID* and *Secret Key* - these are your API keys.   
   Please refer to our [Developer Tools](https://admin.wochit.com/developers/integration-setup) to obtain your keys.
@@ -193,7 +193,7 @@ NOTE: Your API keys carry many privileges, be sure to keep them secure! Do not s
 </code-group>
 
 The token value is the *userToken*. Use *userToken* to [open the Wochit Video Editor](/embed.html#set-configuration). 
-The token expiration time is 24 hours from creation time. 
+The token expiration time is 24 hours from the creation time. 
 
 ## Error handling
 
