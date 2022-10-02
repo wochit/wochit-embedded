@@ -3,7 +3,7 @@ import {
   ApplicationOptions,
   TApplicationEventCallback,
 } from './ApplicationOptions';
-import { hasObject, uuid } from '../api/toolkit';
+import { hasObject, logError, uuid } from '../api/toolkit';
 import {
   createContainer$,
   createIframe$,
@@ -131,14 +131,19 @@ export class WochitEmbeddedApp {
     this.#mountIframe();
   }
 
-  #isRelevantMessage(e: MessageEvent<any>): boolean {
-    const originUrl = new URL(e.origin);
-    return (
-      originUrl.hostname.endsWith(WOCHIT_DOMAIN_MASK) &&
-      hasObject(common) &&
-      hasObject(shortcut) &&
-      this.#$iframe !== null
-    );
+  #isRelevantMessage(e: MessageEvent<unknown>): boolean {
+    let rv = false;
+    try {
+      const originUrl = new URL(e.origin);
+      rv =
+        originUrl.hostname.endsWith(WOCHIT_DOMAIN_MASK) &&
+        hasObject(common) &&
+        hasObject(shortcut) &&
+        this.#$iframe !== null;
+    } catch (ignore) {
+      //
+    }
+    return rv;
   }
 
   #onMessage(e: MessageEvent<TWindowMessageData | IApplicationEvent>): void {
@@ -186,7 +191,11 @@ export class WochitEmbeddedApp {
       return;
     }
 
-    shortcut.on.loaded(this.#$iframe);
+    try {
+      shortcut.on.loaded(this.#$iframe);
+    } catch (exc) {
+      logError(exc);
+    }
 
     this.#$iframe.contentWindow.postMessage(
       {
@@ -207,7 +216,11 @@ export class WochitEmbeddedApp {
       return;
     }
 
-    shortcut.on.loaded(this.#$iframe);
+    try {
+      shortcut.on.loaded(this.#$iframe);
+    } catch (exc) {
+      logError(exc);
+    }
 
     this.#$iframe.contentWindow.postMessage(
       {
@@ -225,7 +238,11 @@ export class WochitEmbeddedApp {
   }
 
   #onShortcutReady(): void {
-    shortcut.on.ready();
+    try {
+      shortcut.on.ready();
+    } catch (exc) {
+      logError(exc);
+    }
   }
 
   #onShortcutApplicationEvent(e: MessageEvent<IApplicationEvent>): void {
@@ -234,7 +251,11 @@ export class WochitEmbeddedApp {
 
     const callback = shortcut.on[eventName] as TApplicationEventCallback;
     if (typeof callback === 'function') {
-      callback(e.data.payload);
+      try {
+        callback(e.data.payload);
+      } catch (exc) {
+        logError(exc);
+      }
     }
 
     if (eventName === 'abort') {

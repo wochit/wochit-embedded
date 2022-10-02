@@ -30,19 +30,19 @@ import wt from '@wochit/embedded';
 
 wt.config({ clientId, userToken });
 
-document.querySelector('.video-creator-btn').addEventListener('click', () => {
-  wt.openVideoCreator({});
+document.querySelector('.video-editor-btn').addEventListener('click', () => {
+  wt.openVideoEditor({});
 });
 ```
 
 #### Using named import
 ```javascript
-import { config, openVideoCreator } from '@wochit/embedded';
+import { config, openVideoEditor } from '@wochit/embedded';
 
 config({ clientId, userToken });
 
-document.querySelector('.video-creator-btn').addEventListener('click', () => {
-  openVideoCreator({});
+document.querySelector('.video-editor-btn').addEventListener('click', () => {
+  openVideoEditor({});
 });
 ```
 
@@ -77,8 +77,8 @@ Then somewhere in your app:
 ```javascript
 window.wt('config', { clientId, userToken });
 
-document.querySelector('.video-creator-btn').addEventListener('click', () => {
-  window.wt('openVideoCreator', {});
+document.querySelector('.video-editor-btn').addEventListener('click', () => {
+  window.wt('openVideoEditor', {});
 });
 ```
 

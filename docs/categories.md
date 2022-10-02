@@ -40,4 +40,4 @@ Here's a full list of available template categories:
 - Pintrest
 - LinkedIn
 
-[<- Back](/embed.html#open-the-video-creator)  
+[<- Back](/embed.html#open-the-video-editor)  

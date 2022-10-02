@@ -44,9 +44,9 @@ export function config(options: ICommonOptions) {
  * Mounts iframe to the page
  * @param [options] {IApplicationOptions}
  */
-export function openVideoCreator(options?: IApplicationOptions) {
+export function openVideoEditor(options?: IApplicationOptions) {
   if (!common) {
-    logError('calling openVideoCreator() before config()');
+    logError('calling openVideoEditor() before config()');
     return;
   }
 
@@ -58,17 +58,17 @@ export function openVideoCreator(options?: IApplicationOptions) {
     new URL(shortcut.envUrl);
   } catch (xcp) {
     logError(
-      `calling openVideoCreator() with invalid envUrl: "${options?.envUrl}"`
+      `calling openVideoEditor() with invalid envUrl: "${options?.envUrl}"`
     );
     return;
   }
 
-  app.log('openVideoCreator', shortcut);
+  app.log('openVideoEditor', shortcut);
   app.setContext(common, shortcut);
   app.mount();
 }
 
 export default {
   config,
-  openVideoCreator,
+  openVideoEditor,
 };

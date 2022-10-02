@@ -1,7 +1,7 @@
 # Webhook
 
 
-Define and implement a webhook to be notified whenever a video is created by one of your end-users. The notification will be triggered asynchronously, whether the Video Creator iFrame is open or not.    
+Define and implement a  webhook to be notified whenever a video is created by one of your end-users.  The notification will be triggered asynchronously, whether the Video Editor iFrame is open or not.    
 Set up your webhook endpoint [here!](https://admin.wochit.com/developers/integration-setup) 
 
 Once a video is successfully produced on the Wochit servers,  a POST request will be sent to  the Webhook address provided. Expect the following JSON structure:
@@ -9,7 +9,7 @@ Once a video is successfully produced on the Wochit servers,  a POST request wil
 
 ```json
 {
-    "videoContext": "string-sent-when-opened-the-video-creator",
+    "videoContext": "string-sent-when-opened-the-video-editor",
     "wochitVideoId": "6094092472a9105747957aa3",
     "thumbnailUrl": "http://example.com/direct-link-to-thumbnail",    
     "videoUrl": "https://example.com/direct-link-to-video", 
@@ -19,10 +19,10 @@ Once a video is successfully produced on the Wochit servers,  a POST request wil
 ### Attributes:
 ***
 **videoContext** <code>string</code>   
-String initiated when calling openVideoCreator(). [videoContext](/embed.html#you-can-customize-the-video-creator-by-using-the-following-properties) connects the video to the Video Creator instance, so you can associate the video with the right end-user, customer or page it belongs to. 
+String initiated when calling openVideoEditor(). [videoContext](/embed.html#you-can-customize-the-video-editor-by-using-the-following-properties) connects the video to the Video Editor instance, so you can associate the video with the right end-user, customer or page it belongs to. 
 ***
 **wochitVideoId** <code>string</code>  
-Wochit unique identifier for this video. You can use it to [re-edit the video](/embed.html#you-can-customize-the-video-creator-by-using-the-following-properties). 
+Wochit unique identifier for this video. You can use it to [re-edit the video](/embed.html#you-can-customize-the-video-editor-by-using-the-following-properties). 
 ***
 **thumbnailUrl** <code>string</code>  
 Direct link to the thumbnail of the video. Links have an expiration time of 24 hours so make sure you download the video to your system and use your own storage / CDN.    

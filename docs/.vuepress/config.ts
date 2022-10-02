@@ -5,7 +5,7 @@ export default {
     sidebar: [
       '/',
       ['/authentication', 'User Authentication'],
-      ['/embed', 'Embed Your Video Creator'],
+      ['/embed', 'Embed Your Video Editor'],
       ['/webhook', 'Listen to A Webhook'],
     ],
     // Assumes GitHub. Can also be a full GitLab url.
@@ -21,8 +21,8 @@ export default {
     editLinks: true,
     // custom text for edit link. Defaults to "Edit this page"
     editLinkText: 'Edit this page on GitHub',
-    lastUpdated: 'Last Updated'
+    lastUpdated: 'Last Updated',
   },
   lang: 'en-US',
-  title: "Wochit Documentation"
+  title: 'Wochit Documentation',
 };

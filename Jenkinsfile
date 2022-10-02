@@ -82,6 +82,7 @@ spec:
         script
         {
           sh """
+          npm config set cache ./.npm --global
           npm config set unsafe-perm true
           mkdir node_modules
           chown node:node node_modules
