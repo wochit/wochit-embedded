@@ -7,7 +7,7 @@ The Wochit Video Editor can be fully customized to fit your brand and offer the 
 
 1. [Get A User Token](/authentication.html#user-authentication)
 
-2. [Embed your video editor](/embed.html#open-the-video-editor)
+2. [Embed your video editor](/embed.html#embed-wochit-video-editor)
 
 3. [Listen to a webhook](/webhook.html)
 

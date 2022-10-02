@@ -171,7 +171,7 @@ Note: Our default language is English.
 ***
 **aspectRatios** <code>string[]</code> <Badge text="Optional" />  
 To filter the templates with specific aspect ratios, pass a list of comma-separated aspect ratios. 
-*(The default value can be set in the [admin panel](https://admin.wochit.com/my-video-creator) under *Templates -> Aspect Ratio*.)*
+*(The default value can be set in the [admin panel](https://admin.wochit.com/my-video-editor) under *Templates -> Aspect Ratio*.)*
 This filtering can be used in order to present templates targeted to different social media platforms. 
 ```javascript
 aspectRatios: 'ASPECT_16_9, ASPECT_1_1'
@@ -234,7 +234,7 @@ Payload example:
   title: "Video Title",
   videoContext: "ABC",
   videoId: "6094092472a9105747957aa3",
-  videoState: "PROCESSING",
+  videoState: "PROCESSING"
 }
 ```
 
@@ -247,10 +247,10 @@ The video duration in seconds.
 The title of the video.  
 ***
 **videoContext** <code>string</code>  
-String initiated when calling openVideoCreator(). [videoContext](/embed.html#you-can-customize-the-video-creator-by-using-the-following-properties) connects the video to the video creator instance, so you can know where the video belongs to. 
+String initiated when calling openVideoEditor(). [videoContext](/embed.html#customize-the-wochit-video-editor-by-using-the-following-properties) connects the video to the video editor instance, so you can know where the video belongs to. 
 ***
 **videoId** <code>string</code>  
-Wochit unique identifier for this video. You can use it to [re-edit the video](/embed.html#you-can-customize-the-video-creator-by-using-the-following-properties). 
+Wochit unique identifier for this video. You can use it to [re-edit the video](/embed.html#customize-the-wochit-video-editor-by-using-the-following-properties). 
 ***
 **videoState** <code>string</code>   
 This property indicates the state of the video. 'PROCESSING' is the initial state of the video.  
@@ -299,13 +299,13 @@ Payload example:
 This property indicates the state of the video. 'DONE' means that the video has been produced successfully. 'FAILED' means that the video production failed. 
 ***
 **wochitVideoId** <code>string</code>  
-Wochit unique identifier for this video. You can use it to [re-edit the video](/embed.html#you-can-customize-the-video-editor-by-using-the-following-properties). 
+Wochit unique identifier for this video. You can use it to [re-edit the video](/embed.html#customize-the-wochit-video-editor-by-using-the-following-properties). 
 ***
 **duration** <code>float</code>  
 The video duration in seconds. 
 ***
 **videoContext** <code>string</code>  
-String initiated when calling openVideoEditor(). [videoContext](/embed.html#you-can-customize-the-video-editor-by-using-the-following-properties) connects the video to the video editor instance, so you can know where the video belongs to. 
+String initiated when calling openVideoEditor(). [videoContext](/embed.html#customize-the-wochit-video-editor-by-using-the-following-properties) connects the video to the video editor instance, so you can know where the video belongs to. 
 ***
 **title** <code>string</code>  
 The title of the video. The user can edit the video title in the video editor.  

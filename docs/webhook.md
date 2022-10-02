@@ -19,10 +19,10 @@ Once a video is successfully produced on the Wochit servers,  a POST request wil
 ### Attributes:
 ***
 **videoContext** <code>string</code>   
-String initiated when calling openVideoEditor(). [videoContext](/embed.html#you-can-customize-the-video-editor-by-using-the-following-properties) connects the video to the Video Editor instance, so you can associate the video with the right end-user, customer or page it belongs to. 
+String initiated when calling openVideoEditor(). [videoContext](/embed.html#customize-the-wochit-video-editor-by-using-the-following-properties) connects the video to the Video Editor instance, so you can associate the video with the right end-user, customer or page it belongs to. 
 ***
 **wochitVideoId** <code>string</code>  
-Wochit unique identifier for this video. You can use it to [re-edit the video](/embed.html#you-can-customize-the-video-editor-by-using-the-following-properties). 
+Wochit unique identifier for this video. You can use it to [re-edit the video](/embed.html#customize-the-wochit-video-editor-by-using-the-following-properties). 
 ***
 **thumbnailUrl** <code>string</code>  
 Direct link to the thumbnail of the video. Links have an expiration time of 24 hours so make sure you download the video to your system and use your own storage / CDN.    
