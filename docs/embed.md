@@ -347,7 +347,7 @@ galleryAssets: [
       },
       {
         url: 'https://cdn1.sample.com/video.mp4',
-        thumbnailUrl: 'https://cdn1.sample.com/videoThumbnail.jpg'
+        thumbnailUrl: 'https://cdn1.sample.com/videoThumbnail.jpg',
         duration: 2.21, 
         type: 'video',
       },
@@ -362,7 +362,7 @@ galleryAssets: [
       },
       {
         url: 'https://cdn1.sample.com/video2.mp4',
-        thumbnailUrl: 'https://cdn1.sample.com/videoThumbnail2.jpg'
+        thumbnailUrl: 'https://cdn1.sample.com/videoThumbnail2.jpg',
         duration: 5.21, 
         type: 'video',
       },
@@ -375,7 +375,7 @@ The galleryAssets property is structured in a JSON format with the following par
 **title** <code>string</code> <Badge text="Required" type="warning"/> 
 This is the name of the folder.  
 ***
-**assets** <code>object[]</code> <Badge text="Required" type="warning"/> 
+**assets** <code>object[]</code> <Badge text="Required" type="warning"/>  
 An array of assets objects. Each asset has the following properties: 
 
 - **type** <code>string</code> <Badge text="Required" type="warning"/>  
@@ -383,16 +383,18 @@ The type of the asset. Can be *image* or *video*.
 ***
 - **url** <code>string</code> <Badge text="Required" type="warning"/>  
 Direct link to the media asset. This should be a cross-origin link that is available for us to download.   
-Supported formats: png, jpeg for images and mp4 and mov for video assets. 
+Supported formats: `png`, `jpeg` for images and `mp4` and `mov` for video assets. 
 ***
 - **thumbnailUrl** <code>string</code> <Badge text="Required*" type="warning"/> (*only if the asset is a *video*)   
 Direct link to the video thumbnail. This should be a cross-origin link that is available for us to download.  
-Supported formats: png and jpeg.
+Supported formats: `png` and `jpeg`.
 ***
 - **duration** <code>float</code> <Badge text="Required*" type="warning"/> (*only if the asset is a *video*)   
-The video duration in seconds. 
+The video duration in seconds.  
 ***
-
+- **title** <code>string</code> <Badge text="Optional"/>  
+  Media title. Shown as a tooltip on hover.
+***
 
 ### Linked fields
 
