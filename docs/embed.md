@@ -393,7 +393,7 @@ Supported formats: `png` and `jpeg`.
 The video duration in seconds.  
 ***
 - **title** <code>string</code> <Badge text="Optional"/>  
-  Media title. Shown as a tooltip on hover.
+This is the name of the media and it's shown when the user is hovering over the asset.
 ***
 
 ### Linked fields
