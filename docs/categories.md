@@ -12,6 +12,7 @@ Here's a full list of available template categories:
 - Pop Culture
 - HR
 - Sports
+- News
 
 **Use-Case:**  
 - Profile

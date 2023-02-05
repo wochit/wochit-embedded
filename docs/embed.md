@@ -86,9 +86,8 @@ A user token that is the unique key generated every time a user accesses the Woc
 ## Open the video editor
 
 Call openVideoEditor() to open your customized Wochit Video Editor in an iFrame.  
-The following example shows how to create a button or a link that triggers the openVideoEditor action: 
+The following example shows how to create a button or a link that triggers the openVideoEditor action:   
   
-
 
 <code-group>
 <code-block title="Module" active>
@@ -156,12 +155,12 @@ For more information see [Triggered Events](/embed.html#triggered-events).
 ***  
 **showCreativeGallery** <code>boolean</code> <Badge text="Optional" />   
 Whether to allow users to choose from Wochit’s extensive library of rights-cleared stock photos and videos image and video creative library.  
-*(The default value can be set in the [admin panel](https://admin.wochit.com/my-video-editor) under *Look & Feel -> Advanced -> Stock photos & videos*.
+*(The default value can be set in the [admin panel](https://admin.wochit.com/my-video-editor) under *Look & Feel -> Features -> Stock photos & videos*.
 )*   
 ***
 **showUploadGallery** <code>boolean</code> <Badge text="Optional" />     
 Whether to allow users to upload their own content from their device.   
-*(The default value can be set in the [admin panel](https://admin.wochit.com/my-video-editor) under *Look & Feel -> Advanced -> Self upload photos and videos*.)*
+*(The default value can be set in the [admin panel](https://admin.wochit.com/my-video-editor) under *Look & Feel -> Features -> Self upload photos and videos*.)*
 
 ***
 **destLanguage** <code>string</code> <Badge text="Optional" />      
@@ -196,9 +195,7 @@ categoryNames: 'Food,Wellness,Story Telling,TikTok'
 Here's a [full list](/categories.html) of available template categories.
 ***
 **videoId** <code>string</code> <Badge text="Optional" />  
-By launching the Wochit Video Editor with a specific videoID, you may get the user directly into re-editing a previously produced video.   
-If not specified, the Wochit Video Editor will open with the template gallery page, where users create a brand new video.   
-Note, that when re-editing a video, a new video ID will be assigned to the edited video.
+By providing a specific video ID, users can access a previously produced video or a previously saved draft to make changes to it. If no video ID is specified, the editor will open to the template gallery page, where users can create a new video from scratch. When a produced video is re-edited, a new video ID will be assigned to the edited version. However, if a draft is re-edited, the same video ID will be kept for future editing.
 ***
 **containerEl** <code>HTMLElement</code> <Badge text="Optional" />  
 By default, the Wochit Video Editor will open as a modal in your website / app.    
@@ -215,14 +212,35 @@ openVideoEditor({
 
 ## Triggered Events
 As the user interacts with the Wochit Video Editor, a few events will be triggered. You are welcome to implement callback functions on your side and react to any of these events.
+
 <code>on.loaded</code>
 Triggered when the Video Editor resources have been loaded.  
 
 <code>on.ready</code>
 Triggered when the Video Editor is ready to use and the user can start working.  
 
-<code>on.abort</code>
-Triggered when the user clicked the ‘Exit’ button or chose to close the Video Editor.  
+<code>on.draft_new</code>
+Triggered when the Video Draft has been created.   
+Payload example:
+
+```json
+{
+  videoContext: "ABC",
+  videoId: "6094092472a9105747957aa3"
+}
+```
+
+<code>on.draft_delete</code>
+Triggered when the Video Draft has been deleted by the user.   
+Payload example:
+
+```json
+{
+  videoContext: "ABC",
+  videoId: "6094092472a9105747957aa3"
+}
+```
+
 
 <code>on.produce</code>
 Triggered when the user clicked the ‘Produce’ button. In this case, a payload with the wochit videoId will be passed to the event.  
@@ -237,26 +255,8 @@ Payload example:
   videoState: "PROCESSING"
 }
 ```
-
-#### Attributes:
-***
-**duration** <code>float</code>  
-The video duration in seconds. 
-***
-**title** <code>string</code>  
-The title of the video.  
-***
-**videoContext** <code>string</code>  
-String initiated when calling openVideoEditor(). [videoContext](/embed.html#customize-the-wochit-video-editor-by-using-the-following-properties) connects the video to the video editor instance, so you can know where the video belongs to. 
-***
-**videoId** <code>string</code>  
-Wochit unique identifier for this video. You can use it to [re-edit the video](/embed.html#customize-the-wochit-video-editor-by-using-the-following-properties). 
-***
-**videoState** <code>string</code>   
-This property indicates the state of the video. 'PROCESSING' is the initial state of the video.  
-***
-
-
+<code>on.abort</code>
+Triggered when the user clicked the ‘Exit’ button or chose to close the Video Editor. 
 
 <code>on.produce_done</code>
 Triggered as soon as a video is produced. A payload with a link to the video alongside some additional metadata will be passed to the event:   
@@ -296,7 +296,7 @@ Payload example:
 #### Attributes:
 ***
 **state** <code>string</code>   
-This property indicates the state of the video. 'DONE' means that the video has been produced successfully. 'FAILED' means that the video production failed. 
+This property indicates the state of the video. 'PROCESSING' is the initial state of the video. 'DONE' means that the video has been produced successfully. 'FAILED' means that the video production failed. 
 ***
 **wochitVideoId** <code>string</code>  
 Wochit unique identifier for this video. You can use it to [re-edit the video](/embed.html#customize-the-wochit-video-editor-by-using-the-following-properties). 
