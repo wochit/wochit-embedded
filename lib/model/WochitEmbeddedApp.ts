@@ -14,7 +14,7 @@ import {
   CONTAINER_CLASS,
   IFRAME_CLASS,
   LOGGER_PREFIX,
-  WOCHIT_DOMAIN_MASK,
+  WOCHIT_DOMAIN_REGEXP,
   INCOMING_MESSAGE,
   OUTGOING_MESSAGE,
   BODY_WHEN_MOUNTED_CLASS,
@@ -136,7 +136,7 @@ export class WochitEmbeddedApp {
     try {
       const originUrl = new URL(e.origin);
       rv =
-        originUrl.hostname.endsWith(WOCHIT_DOMAIN_MASK) &&
+        WOCHIT_DOMAIN_REGEXP.test(originUrl.hostname) &&
         hasObject(common) &&
         hasObject(shortcut) &&
         this.#$iframe !== null;

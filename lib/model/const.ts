@@ -5,7 +5,7 @@ export const CONTAINER_CLASS = 'wochit-embedded-container';
 export const IFRAME_CLASS = 'wochit-embedded-iframe';
 export const BODY_WHEN_MOUNTED_CLASS = 'wochit-embedded-mounted';
 export const SPINNER_CLASS = 'wochit-embedded-spinner';
-export const WOCHIT_DOMAIN_MASK = '.wochit.com';
+export const WOCHIT_DOMAIN_REGEXP = /\bwochit\.(com|ai)\b/i;
 export enum INCOMING_MESSAGE {
   SHORTCUT_LOADED = 'shortcutLoaded',
   SHORTCUT_READY = 'shortcutReady',
