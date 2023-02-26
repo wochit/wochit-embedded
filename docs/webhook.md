@@ -17,7 +17,8 @@ We send a notification when a video has been produced successfully, video produc
     "wochitVideoId": "6094092472a9105747957aa3",
     "thumbnailUrl": "http://example.com/direct-link-to-thumbnail",    
     "videoUrl": "https://example.com/direct-link-to-video", 
-    "title": "The video title" 
+    "title": "The video title",
+    "videoDuration" : 35.9
 }
 ```
 </code-block>
@@ -27,8 +28,7 @@ We send a notification when a video has been produced successfully, video produc
 {
     "type" : "video.delete",
     "videoContext": "string-sent-when-opened-the-video-editor",
-    "wochitVideoId": "6094092472a9105747957aa3",
-    "errorMessage": "Failed to download 3 assets: {asset URLs}" 
+    "wochitVideoId": "6094092472a9105747957aa3"
 }
 ```
 
@@ -56,16 +56,13 @@ Direct link to the video. Links have an expiration time of 24 hours so make sure
 **title** <code>string</code>  
 The title of the video. The title is given by the end-user. 
 ***
-
+**videoDuration** <code>float</code>  
+The duration of the video in seconds. 
+***
 
 
 ## Drafts Management
-We send a notification when a video draft has been created, updated or deleted. We send webhooks of events only if the draft has a [videoContext](/embed.html#customize-the-wochit-video-editor-by-using-the-following-properties) and the drafts management is enabled in the [admin panel](https://admin.wochit.com/my-video-editor) under *Look & Feel -> Features -> Allow saving drafts*.
-
-::: danger Important!   
-If you allow your users to save drafts, ensure that no more than one user works on the draft simultaneously, as auto-save can override the other user's changes.
-:::   
-
+We send a notification when a video draft has been created, updated or deleted. We send webhooks of events only if the draft has a [videoContext](/embed.html#customize-the-wochit-video-editor-by-using-the-following-properties) and the drafts management is enabled in the [admin panel](https://admin.wochit.com/my-video-editor) under *Look & Feel -> Features -> Allow saving drafts*.     
 Expect the following JSON structure:
 
 <code-group>
@@ -87,6 +84,7 @@ Expect the following JSON structure:
 ```json
 {
     "type" : "draft.update",
+    "videoContext": "string-sent-when-opened-the-video-editor",
     "wochitVideoId": "6094092472a9105747957aa3",
     "thumbnailUrl": "http://example.com/direct-link-to-thumbnail",    
     "title": "The video title" 
@@ -124,6 +122,10 @@ Direct link to the thumbnail of the video. Links have an expiration time of 24 h
 The title of the video. The title is given by the end-user. 
 ***
 
+::: danger Important!   
+* If you allow your users to save drafts, ensure that no more than one user works on the draft simultaneously, as auto-save can override the other user's changes.    
+* The videoContext in the draft.update webhook is identical to the videoContext you used when first initiating the draft edit. It's strongly advised that you maintain a mapping between the wochit Video Id and the videoContext for future reference.
+::: 
 
 ::: warning You might need to whitelist Wochit IPs to allow triggering the Webhook post:
 * 54.81.68.237
