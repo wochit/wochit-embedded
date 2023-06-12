@@ -7,6 +7,7 @@ export default {
       ['/authentication', 'User Authentication'],
       ['/embed', 'Embed Your Video Editor'],
       ['/webhook', 'Listen to A Webhook'],
+      ['/api', 'API Reference'],
     ],
     // Assumes GitHub. Can also be a full GitLab url.
     repo: 'wochit/wochit-embedded',

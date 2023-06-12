@@ -60,13 +60,13 @@ Call the config() method to set up the integration context. This method must be 
 ```js
 import { config } from '@wochit/embedded';
 
-config({ clientId, userToken });
+config({ clientId: '<clientId>', userToken: '<userToken>' });
 ```
 </code-block>
 
 <code-block title="HTML">
 ```js
-window.wt('config', { clientId, userToken });
+window.wt('config', { clientId: '<clientId>', userToken: '<userToken>' });
 ```
 </code-block>
 
@@ -186,13 +186,21 @@ Wochit’s Video Editor can jump-start the templates with pre-injected data, per
 You can [personalize the user experience](/embed.html#linked-fields) by sending an array of personal data injected into the video.
 ***
 **categoryNames** <code>string[]</code> <Badge text="Optional" />   
-Each template in the template gallery belongs to one or more categories. In the [admin panel](https://admin.wochit.com/my-video-editor) you can choose the entire set of templates you’d like to include in your Video Editor. Use the categoryName parameter to filter the template gallery for specific categories. For example - this filtering can be used in order to present one set of templates for end-users accessing the Video Editor from entry point A, and a different set of templates for end-users accessing from entry point B.  
-To filter the templates for specific categories, pass a list of comma-separated category names. If empty, the entire gallery of templates will be shown.
+Each template in the template gallery belongs to one or more categories. In the [admin panel](https://admin.wochit.com/my-video-editor) you can choose the entire set of templates you’d like to include in your Video Editor. Use the categoryNames parameter to filter the template gallery for specific categories. For example - this filtering can be used in order to present one set of templates for end-users accessing the Video Editor from entry point A, and a different set of templates for end-users accessing from entry point B.  
+To filter the templates for specific categories, pass a list of comma-separated category names. If both categoryNames and categoryIds are empty, the entire gallery of templates will be shown.
 
 ```javascript
 categoryNames: 'Food,Wellness,Story Telling,TikTok'
 ```
 Here's a [full list](/categories.html) of available template categories.
+***
+**categoryIds** <code>string[]</code> <Badge text="Optional" />   
+Each template in the template gallery has it's own unique identifier. In the [admin panel](https://admin.wochit.com/my-video-editor) you can choose the entire set of templates you’d like to include in your Video Editor or create your own set of categories. Use the categoryId parameter to filter the template gallery for specific categories.     
+To filter the templates for specific categories, pass a list of comma-separated category ids. If both categoryNames and categoryIds are empty, the entire gallery of templates will be shown. You can extract the available category Ids using [our API](/api.html#template-categories).
+
+```javascript
+categoryIds: ['5bfe408d801aa53aa37d9d98','5bfe40b7801aa53aa37d9d9c']
+```
 ***
 **videoId** <code>string</code> <Badge text="Optional" />  
 By providing a specific video ID, users can access a previously produced video or a previously saved draft to make changes to it. If no video ID is specified, the editor will open to the template gallery page, where users can create a new video from scratch. When a produced video is re-edited, a new video ID will be assigned to the edited version. However, if a draft is re-edited, the same video ID will be kept for future editing.
