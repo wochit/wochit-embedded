@@ -8,6 +8,7 @@ export default {
       ['/embed', 'Embed Your Video Editor'],
       ['/webhook', 'Listen to A Webhook'],
       ['/api', 'API Reference'],
+      ['/ai', 'Wochit AI'],
     ],
     // Assumes GitHub. Can also be a full GitLab url.
     repo: 'wochit/wochit-embedded',
