@@ -23,7 +23,7 @@ spec:
     nodegroup-type: cicd-workloads
   containers:
   - name: kubectl-aws-iam-authenticator
-    image: 10.100.200.251:5000/kubectl-aws-iam-authenticator:secrets
+    image: tools-docker-registry.wochit.com/kubectl-aws-iam-authenticator:secrets
     args:
     - /bin/sh
     - -c
@@ -37,7 +37,7 @@ spec:
         mountPath: /root/.aws/config
         subPath: config
   - name: node
-    image: 10.100.200.251:5000/node-chrome:latest
+    image: tools-docker-registry.wochit.com/node-chrome:latest
     command:
       - /bin/sh
       - -ec
