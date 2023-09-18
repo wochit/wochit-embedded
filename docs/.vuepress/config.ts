@@ -4,7 +4,8 @@ export default {
     displayAllHeaders: true, // Default: false
     sidebar: [
       '/',
-      ['/authentication', 'User Authentication'],
+      ['/authentication', 'Single Account Setup'],
+      ['/customerSetup', 'Multi Account Setup'],
       ['/embed', 'Embed Your Video Editor'],
       ['/webhook', 'Listen to A Webhook'],
       ['/api', 'API Reference'],
