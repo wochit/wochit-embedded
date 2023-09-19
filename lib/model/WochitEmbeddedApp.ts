@@ -123,6 +123,20 @@ export class WochitEmbeddedApp {
     shortcut = _shortcut;
   }
 
+  updateAppContext(_updatedOptions: ApplicationOptions): void {
+    shortcut = Object.assign(shortcut || {}, _updatedOptions);
+    if (this.#$iframe && this.#$iframe.contentWindow) {
+      this.#$iframe.contentWindow.postMessage(
+        {
+          cmd: OUTGOING_MESSAGE.UPDATE_OPTIONS,
+          ..._updatedOptions,
+        },
+        '*'
+      );
+    }
+    this.log('updateAppContext', shortcut);
+  }
+
   mount(): void {
     if (this.#isIframeMounted()) {
       this.#unmountIframe();
