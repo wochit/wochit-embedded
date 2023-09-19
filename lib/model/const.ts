@@ -15,6 +15,7 @@ export enum INCOMING_MESSAGE {
 export enum OUTGOING_MESSAGE {
   SHORTCUT_OPTIONS = 'shortcutOptions',
   STUDIO_OPTIONS = 'studioOptions',
+  UPDATE_OPTIONS = 'updateOptions',
 }
 export const DEFAULT = {
   SKIP_LOGIN: false,

@@ -68,7 +68,26 @@ export function openVideoEditor(options?: IApplicationOptions) {
   app.mount();
 }
 
+/**
+ * Update video editor configuration
+ * @param options {ApplicationOptions}
+ */
+export function updateVideoEditor(options: ApplicationOptions) {
+  if (!hasObject(options)) {
+    logError('updateVideoEditor() missing required argument');
+    return;
+  } else if (!shortcut) {
+    logError('calling updateVideoEditor() before openVideoEditor()');
+    return;
+  }
+
+  app.updateAppContext(options);
+
+  app.log('updateVideoEditor', options);
+}
+
 export default {
   config,
   openVideoEditor,
+  updateVideoEditor,
 };
